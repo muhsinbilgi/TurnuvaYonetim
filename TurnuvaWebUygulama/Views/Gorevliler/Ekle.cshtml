@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model VeritabaniKatmani.Gorevliler
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Sporcu Ekle</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-lg-6">
+    <div class="card">
+
+        <div class="card-body">
+            <!-- Credit Card -->
+            <div id="pay-invoice">
+                <div class="card-body">
+
+                    <hr>
+
+                    @using (Html.BeginForm("Ekle", "Gorevliler", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        <div class="form-group">
+                            <label for="Adi" class="control-label mb-1">Görevli Adı</label>
+                            @Html.TextBoxFor(m => m.Adi, new { @id = "cc-name", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Soyadi" class="control-label mb-1">Görevli Soyadı</label>
+                            @Html.TextBoxFor(m => m.Soyadi, new { @id = "cc-name", @class = "form-control" })
+                        </div>
+                       
+                        <div class="form-group has-success">
+                            <label for="GorevTuru" class="control-label mb-1">Görev Türü</label>
+                            @Html.DropDownListFor(m => m.GorevTuru, (List<SelectListItem>)ViewBag.dgr, new { @id = "select", @class = "form-control" })
+                         
+                        </div>
+                   
+                        
+                        <div class="form-group">
+                            <label for="file" class="control-label mb-1">Resim</label>
+                            <input type="file" name="file" id="file-input" class="form-control-file" />
+
+                        </div>
+                        <div class="form-group">
+                            <hr />
+                        </div>
+
+                        <div>
+                            @if (@ViewBag.Basari == 1)
+                            {
+                                <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                    <span class="badge badge-pill badge-success">Başarılı</span> Görevli Kaydedildi.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            }
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fa fa-dot-circle-o"></i> Kaydet
+                            </button>
+                            @Html.ActionLink("Görevliler", "Index", "Gorevliler", null, new { @class = "btn btn-primary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- .card -->
+
+</div>
+

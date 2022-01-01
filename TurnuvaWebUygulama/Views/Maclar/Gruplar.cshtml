@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Gruplar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model VeritabaniKatmani.GrupListele
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-item">
+                @Html.ActionLink("Maçlar", "Index", "Maclar", new { @class = "btn btn-success btn-lg" })
+                @Html.ActionLink("Gruplar", "Gruplar", "Maclar", new { @class = "btn btn-success btn-lg" })
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@foreach (var Grup in Model.GrupAdlari)
+{
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>@Grup.GrupId Grup</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">TakimAdi</th>
+                            <th scope="col">OynadigiMac</th>
+                            <th scope="col">Galibiyet</th>
+                            <th scope="col">Beraberlik</th>
+                            <th scope="col">Maglubiyet</th>
+                            <th scope="col">AttigiGol</th>
+                            <th scope="col">YedigiGol</th>
+                            <th scope="col">Averaj</th>
+                            <th scope="col">Puan</th>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model.Gruplar)
+                    {
+                        if (Grup.GrupId == item.GrupId)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.TakimAdi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OynadigiMac)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Galibiyet)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Beraberlik)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Maglubiyet)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AttigiGol)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.YedigiGol)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Averaj)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Puan)</td>
+                                </tr>
+
+                            </tbody>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,66 @@
+﻿@model VeritabaniKatmani.Turnuva
+@{
+    ViewBag.Title = "Ayarlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Ayarlar</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+    <div class="animated fadeIn">
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Varsayılan Turnuva Seçimi</strong>
+                    </div>
+                    <div class="card-body">
+                        <!-- Credit Card -->
+                        <div id="pay-invoice">
+                            <div class="card-body">
+
+                                @using (Html.BeginForm("Ayarlar", "Home", FormMethod.Post))
+                                {
+                                    <div class="form-group has-success">
+                                        <label for="GorevTuru" class="control-label mb-1">Varsayılan Turnuva Seç</label>
+                                        @Html.DropDownListFor(m => m.Id, (List<SelectListItem>)ViewBag.dgr, new { @id = "select", @class = "form-control" })
+
+                                    </div>
+                                    <div>
+                                        <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                            <i class="fa fa-lock fa-lg">  Kaydet</i>&nbsp;
+
+                                        </button>
+                                    </div>
+                                }
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- .card -->
+
+            </div>
+            <!--/.col-->
+
+
+
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->

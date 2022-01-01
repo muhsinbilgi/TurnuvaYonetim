@@ -1,0 +1,67 @@
+﻿@model VeritabaniKatmani.Gorevliler
+@{
+    ViewBag.Title = "Duzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-6">
+    <div class="card">
+
+        <div class="card-body">
+            <!-- Credit Card -->
+            <div id="pay-invoice">
+                <div class="card-body">
+
+                    <hr>
+
+                    @using (Html.BeginForm("Duzenle", "Gorevliler", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        <div class="form-group">
+                            <label for="Adi" class="control-label mb-1"> Adı</label>
+                            @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @id = "cc-name", @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Soyadi" class="control-label mb-1">Soyadı</label>
+                            @Html.EditorFor(model => model.Soyadi, new { htmlAttributes = new { @id = "cc-name", @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Statu" class="control-label mb-1">Statu</label>
+                            @Html.DropDownListFor(m => m.GorevTuru, (List<SelectListItem>)ViewBag.dgr, new { @id = "select", @class = "form-control" })
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="file" class="control-label mb-1">Resim</label>
+                            <input type="file" name="file" id="file-input" class="form-control-file" />
+                            @Html.HiddenFor(m => m.Resim)
+                        </div>
+                        <div class="form-group">
+                            <hr />
+                        </div>
+
+                        <div>
+                            @if (@ViewBag.Basari == 1)
+                            {
+                                <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                    <span class="badge badge-pill badge-success">Başarılı</span> Görevli Güncellendi.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            }
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fa fa-dot-circle-o"></i> Kaydet
+                            </button>
+                            @Html.ActionLink("Gorevliler", "Index", "Gorevliler", null, new { @class = "btn btn-primary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- .card -->
+
+</div>
+

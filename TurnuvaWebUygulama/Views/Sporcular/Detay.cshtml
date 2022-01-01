@@ -1,0 +1,160 @@
+﻿@model VeritabaniKatmani.SporcuEvrak
+
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-4">
+    <aside class="profile-nav alt">
+        <section class="card">
+            <div class="card-header user-header alt bg-dark">
+                <div class="media">
+                    <a href="#">
+                        <img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.Sporcular.Resim)" alt="Card image cap" />
+                    </a>
+                    <div class="media-body">
+                        <h2 class="text-light display-6">@Html.DisplayFor(model => model.Sporcular.Adi) @Html.DisplayFor(model => model.Sporcular.Soyadi)</h2>
+                        <p>@Html.DisplayFor(model => model.Sporcular.Mevki)</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-map-marker"></i>  @Html.DisplayFor(model => model.Sporcular.DogumYeri)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-calendar"></i> @Html.DisplayFor(model => model.Sporcular.DogumTarihi)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-phone"></i> @Html.DisplayFor(model => model.Sporcular.Telefon)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-envelope"></i> @Html.DisplayFor(model => model.Sporcular.Email)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-th-large"></i> @Html.DisplayFor(model => model.Sporcular.StatuAdi)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-sort-numeric-asc"></i> @Html.DisplayFor(model => model.Sporcular.LisansNo)
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-users"></i> @Html.DisplayFor(model => model.Sporcular.TakimAdi)
+                </li>
+                @if (@ViewBag.onay == 1)
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-check-square-o"></i> <span class="badge badge-success">Onaylı</span>
+                    </li>
+                }
+                @if (@ViewBag.onay == 2)
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-exclamation-triangle"></i> <span class="badge badge-danger">Reddedildi</span>
+                    </li>
+                }
+
+            </ul>
+
+
+            <div class="card-footer">
+                <table border="0">
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Sporcular", "Index", "Sporcular", null, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+
+                            <td>
+                                @using (Html.BeginForm("Onay", "Sporcular", new { Id = @Html.DisplayFor(model => model.Sporcular.Id) }, FormMethod.Post))
+                                {
+                                    if (User.IsInRole("Y") || User.IsInRole("A"))
+                                    {
+                                        <button class="btn btn-success btn-sm">Onayla</button>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("Red", "Sporcular", new { Id = @Html.DisplayFor(model => model.Sporcular.Id) }, FormMethod.Post))
+                                {
+                                    if (User.IsInRole("Y") || User.IsInRole("A"))
+                                    {
+                                        <button class="btn btn-danger btn-sm">Reddet</button>
+                                    }
+                                }
+                            </td>
+                        
+                    </tr>
+                </table>
+
+            </div>
+
+        </section>
+    </aside>
+
+</div>
+
+
+
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            Sporcu Evrakları
+        </div>
+        <div class="card-body">
+
+            <div id="pay-invoice">
+                <div class="card-body">
+
+                    @if (@ViewBag.ks == 0)
+                    {<span>Hiç Evrak Yok.</span>}
+                    <table border="0">
+
+                        @foreach (var item in Model.Evrak)
+                        {
+                            <thead>
+                                <tr>
+                                    @{
+                                        string[] hobiListe = item.EvrakAdi.Split('.');
+                                        if (hobiListe[1] == "pdf")
+                                        {
+
+                                            <td><img src="~/Content/images/icon/pdf.png" width="50" height="50" /></td>
+
+                                        }
+                                        else if (hobiListe[1] == "jpg" || hobiListe[1] == "png" || hobiListe[1] == "jpeg" || hobiListe[1] == "gif")
+                                        {
+
+                                            <td><img src="~/Content/images/icon/resim.png" width="50" height="50" /></td>
+
+                                        }
+                                        else
+                                        {
+
+                                            <td><img src="~/Content/images/icon/dosya.png" width="50" height="50" /></td>
+
+                                        }}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="~/Image/@Html.DisplayFor(modelItem => item.EvrakAdi)" download>@Html.DisplayFor(modelItem => item.EvrakTuruAdi)</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- .card -->
+
+</div>
+

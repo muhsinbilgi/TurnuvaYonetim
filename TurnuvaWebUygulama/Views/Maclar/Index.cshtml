@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model VeritabaniKatmani.MacListele
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-item">
+                @Html.ActionLink("Maçlar", "Index", "Maclar", new { @class = "btn btn-success btn-lg" })
+                @Html.ActionLink("Gruplar", "Gruplar", "Maclar", new { @class = "btn btn-success btn-lg" })
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@foreach (var MacHafta in Model.MacHaftalari)
+{
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>@MacHafta.Hafta Hafta</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tarih</th>
+                            <th scope="col">Saat</th>
+                            <th scope="col">Takım Adı</th>
+                            <th scope="col"></th>
+                            <th scope="col">Takım Adı</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model.Maclar)
+                    {
+                        if (MacHafta.Hafta == item.Hafta)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Tarih)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Saat)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</td>
+                                    <td>-</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IkinciTakimAdi)</td>
+                                    <td>@Html.ActionLink("Maç Detayı", "Detay", "Maclar", new { id = item.Id }, new { @class = "btn btn-secondary" })</td>
+
+                                </tr>
+
+                            </tbody>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

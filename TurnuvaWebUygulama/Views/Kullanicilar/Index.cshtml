@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<VeritabaniKatmani.Kullanicilar>
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Kullanıcılar</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                    {
+                        <li class="active">@Html.ActionLink("Kullanıcı Ekle", "Ekle", "Kullanicilar", new { @class = "btn btn-success btn-lg" })</li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+    <div class="card">
+
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Resim)</th>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.AdiSoyadi)</th>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.KullaniciAdi)</th>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.RolAciklama)</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td><img src="~/Image/@Html.DisplayFor(modelItem => item.Resim)" width="25" height="25" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.AdiSoyadi)</td>
+                            <td>@Html.DisplayFor(modelItem => item.KullaniciAdi)</td>
+                            <td>@Html.DisplayFor(modelItem => item.RolAciklama)</td>
+                            <td>@Html.ActionLink("Düzenle", "Duzenle", "Kullanicilar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })</td>
+                            <td>
+                                @using (Html.BeginForm("Sil", "Kullanicilar", new { Id = item.Id }, FormMethod.Post))
+                                {
+                                    <button class="btn btn-danger btn-sm">Sil</button>
+                                }
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
