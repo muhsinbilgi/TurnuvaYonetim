@@ -136,7 +136,6 @@ namespace TurnuvaWebUygulama.Controllers
             Kullanici.KullaniciAdi = model.Adi.Substring(0, 1) + model.Soyadi.ToLower();
             Kullanici.Parola = model.Adi + 123;
             Kullanici.Rol = "S";
-            Kullanici.TurnuvaId = m.SeciliTurnuva;
             Kullanici.TakimId = model.TakimId;
             Kullanici.SeciliTurnuva = m.SeciliTurnuva;
 

@@ -16,7 +16,6 @@ namespace VeritabaniKatmani
         public string Parola { get; set; }
         public string Rol { get; set; }
         public string RolAciklama { get; set; }
-        public int TurnuvaId { get; set; }
         public DateTime SonGirisZamani { get; set; }
         public int TakimId { get; set; }
         public int SeciliTurnuva { get; set; }

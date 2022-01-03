@@ -101,6 +101,7 @@
     <Compile Include="Model\GrupListele.cs" />
     <Compile Include="Model\Kategori.cs" />
     <Compile Include="Model\KayitSayi.cs" />
+    <Compile Include="Model\KullaniciTurnuva.cs" />
     <Compile Include="Model\Kullanicilar.cs" />
     <Compile Include="Model\MacDetay.cs" />
     <Compile Include="Model\MacGorevlileri.cs" />

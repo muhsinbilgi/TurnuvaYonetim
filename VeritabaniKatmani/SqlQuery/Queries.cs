@@ -11,14 +11,13 @@ namespace VeritabaniKatmani.SqlQuery
 
         public static class Kullanicilar
         {
-            public static string Insert => @"INSERT INTO `kullanicilar`(`AdiSoyadi`, `KullaniciAdi`, `Parola`, `Rol`, `TurnuvaId`,`TakimId`,`SeciliTurnuva`,`Resim`) 
-                                                                 VALUES(@AdiSoyadi,@KullaniciAdi,@Parola,@Rol,@TurnuvaId,@TakimId,@SeciliTurnuva, @Resim)";
+            public static string Insert => @"INSERT INTO `kullanicilar`(`AdiSoyadi`, `KullaniciAdi`, `Parola`, `Rol`,`TakimId`,`SeciliTurnuva`,`Resim`) 
+                                                                 VALUES(@AdiSoyadi,@KullaniciAdi,@Parola,@Rol,@TakimId,@SeciliTurnuva, @Resim)";
             public static string Update => @"update `kullanicilar` set
                                          `AdiSoyadi` = @AdiSoyadi,
                                          `KullaniciAdi` = @KullaniciAdi,
                                          `Parola` = @Parola,
                                          `Rol` = @Rol,
-                                         `TurnuvaId` = @TurnuvaId,
                                          `SonGirisZamani` = @SonGirisZamani,
                                          `TakimId` = @TakimId,
                                          `SeciliTurnuva` = @SeciliTurnuva,
@@ -47,18 +46,14 @@ namespace VeritabaniKatmani.SqlQuery
                                                 from kullanicilar k
                                                 inner join Rol r on r.RolAdi = k.Rol
                                                 where k.Rol = @Rol";
-             public static string GetbyY => @"select
+            public static string GetbyY => @"select
                                                 k.*,
                                                 r.RolAciklama
                                                 from kullanicilar k
+                                                inner join kullaniciturnuva t on t.KullaniciId = k.Id
                                                 inner join Rol r on r.RolAdi = k.Rol
-                                                where k.TurnuvaId != 0 and k.TurnuvaId = @TurnuvaId";
-            public static string GetbyA => @"select
-                                                k.*,
-                                                r.RolAciklama
-                                                from kullanicilar k
-                                                inner join Rol r on r.RolAdi = k.Rol
-                                                where k.TurnuvaId = @TurnuvaId";
+                                                where t.TurnuvaId = @TurnuvaId";
+      
 
         }
 
@@ -350,7 +345,24 @@ inner join statu st on st.Id = s.Statu";
 
 
 
-        
+        public static class KullaniciTurnuva
+        {
+            public static string Insert => @"INSERT INTO `kullaniciturnuva`(`TurnuvaId`, `KullaniciId`) 
+                                                                 VALUES(@TurnuvaId,@KullaniciId)";
+            public static string Update => @"update `kullaniciturnuva` set
+                                         `TurnuvaId` = @TurnuvaId,
+                                         `KullaniciId` = @KullaniciId
+                                          where KullaniciId = @KullaniciId";
+
+
+            public static string Delete => "delete from kullaniciturnuva where Id = @Id";
+            public static string GetAll => @"select * from kullaniciturnuva";
+            public static string GetbyId => "select * from kullaniciturnuva where Id = @Id";
+
+       
+
+
+        }
 
 
 

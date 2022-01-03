@@ -52,6 +52,8 @@ namespace TurnuvaWebUygulama.Controllers
         {
 
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+          
+
 
             List<SelectListItem> Rol = (from i in MvcDbHelper.Repository.GetAll<Rol>(Queries.Rol.GetAll).ToList()
                                         select new SelectListItem
@@ -80,17 +82,28 @@ namespace TurnuvaWebUygulama.Controllers
 
 
             }
-            if(model.Rol == "Y")
-            {
-                model.TurnuvaId = 0;
-                MvcDbHelper.Repository.Insert(Queries.Kullanicilar.Insert, model);
-            }else
-            {
-                model.TurnuvaId = m.SeciliTurnuva;
+
+
+           
+
+
+
                 model.SeciliTurnuva = m.SeciliTurnuva;
                 MvcDbHelper.Repository.Insert(Queries.Kullanicilar.Insert, model);
-            }
-            
+
+
+
+            var MaxId = MvcDbHelper.Repository.GetAll<Kullanicilar>(Queries.Kullanicilar.GetbyMaxId).FirstOrDefault();
+            KullaniciTurnuva Kt = new KullaniciTurnuva();
+            Kt.TurnuvaId = m.SeciliTurnuva;
+            Kt.KullaniciId = MaxId.MaxId;
+            MvcDbHelper.Repository.Insert(Queries.KullaniciTurnuva.Insert, Kt);
+
+
+
+
+
+
             ViewBag.Basari = 1;
             ViewBag.Rol = Rol;
             ViewBag.Tkm = Tkm;
@@ -144,12 +157,25 @@ namespace TurnuvaWebUygulama.Controllers
 
             }
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
-            model.TurnuvaId = m.SeciliTurnuva;
+            model.SeciliTurnuva = m.SeciliTurnuva;
+
+
+
+
+
 
             ViewBag.Basari = 1;
 
 
             MvcDbHelper.Repository.Update(Queries.Kullanicilar.Update, model);
+
+            KullaniciTurnuva Kt = new KullaniciTurnuva();
+            Kt.TurnuvaId = m.SeciliTurnuva;
+            Kt.KullaniciId = model.Id;
+            MvcDbHelper.Repository.Update(Queries.KullaniciTurnuva.Update, Kt);
+
+
+
             return RedirectToAction("Index");
         }
 
@@ -169,15 +195,11 @@ namespace TurnuvaWebUygulama.Controllers
         {
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
 
-          if(m.Rol == "A")
-            { 
-                var kullanicilarResultA = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyA, new { TurnuvaId = m.SeciliTurnuva }).ToList();
-                return kullanicilarResultA;
-            } else
-            {
+         
+         
                 var kullanicilarResultY = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyY, new { TurnuvaId = m.SeciliTurnuva }).ToList();
                 return kullanicilarResultY;
-            }
+            
        
 
 
