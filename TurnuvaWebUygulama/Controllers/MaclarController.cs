@@ -44,13 +44,55 @@ namespace TurnuvaWebUygulama.Controllers
         public ActionResult Detay(int Id)
         {
 
-            MacDetay model = new MacDetay();
-            model = MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetbyId, new { Id = Id}).FirstOrDefault();
+            MacTakimDetay model = new MacTakimDetay();
+            
+
+            model.MacDetay = MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetbyId, new { Id = Id }).FirstOrDefault();
+            model.Detaylar = MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetbyId, new { Id = Id }).ToList();
 
 
-                       
             return View(model);
         }
+
+        public ActionResult DetayEkle(int Id)
+        {
+            List<SelectListItem> tkm = (from i in MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetTkm, new { Id = Id }).ToList()
+            select new SelectListItem
+                                             {
+                                                 Text = i.BirinciTakimAdi,
+                                                 Value = i.Id.ToString()
+                                             }).ToList();
+
+     
+
+
+            ViewBag.tkm = tkm;
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult DetayEkle(MacDetay model, HttpPostedFileBase MacDetay, int Id)
+        {
+            List<SelectListItem> tkm = (from i in MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetTkm, new { Id = Id }).ToList()
+                                        select new SelectListItem
+                                        {
+                                            Text = i.BirinciTakimAdi,
+                                            Value = i.Id.ToString()
+                                        }).ToList();
+
+
+
+
+
+            MvcDbHelper.Repository.Insert(Queries.MacDetay.Insert, model);
+            ViewBag.Basari = 1;
+            ViewBag.tkm = tkm;
+            return View();
+
+        }
+
 
 
 

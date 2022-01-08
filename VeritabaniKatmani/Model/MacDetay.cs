@@ -8,11 +8,15 @@ namespace VeritabaniKatmani
     {
         public int Id { get; set; }
         public int MacId { get; set; }
+        public int TakimId { get; set; }
         public String BirinciTakimAdi { get; set; }
         public String IkinciTakimAdi { get; set; }
-        public int SporcuAdi { get; set; }
-        public int Detayadi { get; set; }
-        public string DetayDakika { get; set; }
+        public int BirinciTakimId { get; set; }
+        public int IkinciTakimId { get; set; }
+        public String SporcuAdi { get; set; }
+        public String Detayadi { get; set; }
+        public int DetayId { get; set; }
+        public int DetayDakika { get; set; }
         public int BirinciTakimSkor { get; set; }
         public int IkinciTakimSkor { get; set; }
         public string BirinciTakimLogo { get; set; }

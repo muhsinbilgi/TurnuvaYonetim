@@ -383,21 +383,45 @@ inner join statu st on st.Id = s.Statu";
             public static string GetAll => @"select * from MacDetay";
 
             public static string GetbyId => @"select 
+md.Id,
+m.Id as MacId,
+md.TakimId,
 t1.Adi as BirinciTakimAdi,
 t2.Adi as IkinciTakimAdi,
+t1.Id as BirinciTakimId,
+t2.Id as IkinciTakimId,
+concat(s.Adi,' ',s.Soyadi) as SporcuAdi,
+d.Adi as Detayadi,
+md.DetayId,
+md.DetayDakika,
 (select COUNT(*) from macdetay md1 where md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
 (select COUNT(*) from macdetay md1 where md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
 t1.Logo as BirinciTakimLogo,
 t2.Logo as IkinciTakimLogo,
+m.TarihSaat as MacTarihSaat,
 m.Hafta as Hafta
 from Maclar m
 inner join takimlar t1 on t1.Id = m.BirinciTakimId
 inner join takimlar t2 on t2.Id = m.IkinciTakimId
-inner join macdetay md on md.MacId = m.Id
-inner join sporcular s on s.Id = md.SporcuId
-inner join detay d on d.Id = md.DetayId
- where m.Id = @Id";
+left join macdetay md on md.MacId = m.Id
+left join sporcular s on s.Id = md.SporcuId
+left join detay d on d.Id = md.DetayId
+ where m.Id = @Id
+order by md.DetayDakika asc";
 
+            public static string GetTkm => @"select 
+m.BirinciTakimId as Id,
+t1.Adi
+from Maclar m
+inner join Takimlar t1 on t1.Id = m.BirinciTakimId
+where m.Id = @Id
+union
+select 
+m.IkinciTakimId as Id,
+t2.Adi
+from Maclar m
+inner join Takimlar t2 on t2.Id = m.BirinciTakimId
+where m.Id = @Id";
 
         }
 

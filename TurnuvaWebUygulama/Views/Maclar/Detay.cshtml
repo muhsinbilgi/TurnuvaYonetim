@@ -1,4 +1,4 @@
-﻿@model VeritabaniKatmani.MacDetay
+﻿@model VeritabaniKatmani.MacTakimDetay
 
 @{
     ViewBag.Title = "Detay";
@@ -6,37 +6,110 @@
 }
 
 
-<div class="col-md-4">
+<div class="col-lg-7">
     <aside class="profile-nav alt">
         <section class="card">
             <div class="card-header user-header alt bg-dark">
-                <div class="media">
-                   
-                        <img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.BirinciTakimLogo)" alt="Card image cap" />
-                        <h2 class="text-light display-6">@Html.DisplayFor(model => model.BirinciTakimAdi) @Html.DisplayFor(model => model.BirinciTakimSkor)  - @Html.DisplayFor(model => model.IkinciTakimSkor)  @Html.DisplayFor(model => model.IkinciTakimAdi)</h2>
-                        <img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.IkinciTakimLogo)" alt="Card image cap" />
-                    <div class="media-body">
-                        <p>@Html.DisplayFor(model => model.MacTarihSaat) | @Html.DisplayFor(model => model.Hafta)</p>
-                    </div>
-                </div>
+                <table border="0" width="100%">
+                    <tr>
+                        <td rowspan="2" width="20%"><img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.MacDetay.BirinciTakimLogo)" width="100" height="100" /></td>
+                        <td align="left" width="25%"><h2 class="text-light display-6">@Html.DisplayFor(model => model.MacDetay.BirinciTakimAdi)</h2></td>
+                        <td width="4%" align="right"><h2 class="text-light display-6">@Html.DisplayFor(model => model.MacDetay.BirinciTakimSkor)</h2></td>
+                        <td width="2%" align="center"><h2 class="text-light display-6">-</h2></td>
+                        <td width="4%" align="left"><h2 class="text-light display-6">@Html.DisplayFor(model => model.MacDetay.IkinciTakimSkor)</h2></td>
+                        <td align="right" width="20%"><h2 class="text-light display-6">@Html.DisplayFor(model => model.MacDetay.IkinciTakimAdi)</h2></td>
+                        <td rowspan="2" width="20%"><img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.MacDetay.IkinciTakimLogo)" width="100" height="100" /></td>
+                    </tr>
+                    <tr>
+                       
+                        <td colspan="5" align="center" width="60%"><p>@Html.DisplayFor(model => model.MacDetay.MacTarihSaat) | @Html.DisplayFor(model => model.MacDetay.Hafta) Hafta</p></td>
+                       
+
+                    </tr>
+                </table>
             </div>
 
 
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fa fa-map-marker"></i>  @Html.DisplayFor(model => model.Detayadi)                
-                </li>
-               
-            </ul>
+            <table border="0" width="100%">
+                <tr>
+                    <td colspan="3" align="center" class="table table-info">Maç Başladı</td>
+                </tr>
+                @foreach (var item in Model.Detaylar)
+                {
+            <tr>
+                @if (item.BirinciTakimId == item.TakimId)
+                {
+                <td align="right">
+
+                    @Html.DisplayFor(model => item.SporcuAdi) &nbsp;&nbsp;
+                    @if (item.DetayId == 1)
+                    {
+                        <i class="fa fa-soccer-ball-o"></i>
+                    }
+                    else if (item.DetayId == 2)
+                    {
+                        <i class="fa fa-square-o"></i>
+                    }
+                    else if (item.DetayId == 3)
+                    {
+                        <i class="fa fa-square"></i>
+                    }
+                    else if (item.DetayId == 4)
+                    {
+                        <i class="fa fa-exchange"></i>
+                    }
 
 
-        
+                </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                <td align="center"> @Html.DisplayFor(model => item.DetayDakika)'</td>
+                @if (item.IkinciTakimId == item.TakimId)
+                {
+            <td align="left">
+                @if (item.DetayId == 1)
+                {
+                    <i class="fa fa-soccer-ball-o"></i>
+                }
+                else if (item.DetayId == 2)
+                {
+                    <i class="fa fa-square-o"></i>
+                }
+                else if (item.DetayId == 3)
+                {
+                    <i class="fa fa-square"></i>
+                }
+                else if (item.DetayId == 4)
+                {
+                    <i class="fa fa-exchange"></i>
+                }
+                &nbsp;&nbsp;
+                @Html.DisplayFor(model => item.SporcuAdi)
+            </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+                }
+                <tr>
+                    <td colspan="3" align="center" class="table table-info">M.S @Html.DisplayFor(model => model.MacDetay.BirinciTakimSkor) - @Html.DisplayFor(model => model.MacDetay.IkinciTakimSkor)</td>
+                </tr>
+            </table>
+
+            <div class="card-footer">
+                <div class="card-text text-sm-center">
+                    @Html.ActionLink("Maçlar", "Index", "Maclar", null, new { @class = "btn btn-primary btn-lg" })
+                </div>
+            </div>
 
         </section>
     </aside>
 
 </div>
-
-
 
 

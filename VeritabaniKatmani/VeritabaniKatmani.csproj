@@ -108,6 +108,7 @@
     <Compile Include="Model\MacHaftalari.cs" />
     <Compile Include="Model\Maclar.cs" />
     <Compile Include="Model\MacListele.cs" />
+    <Compile Include="Model\MacTakimDetay.cs" />
     <Compile Include="Model\Rol.cs" />
     <Compile Include="Model\SporcuEvrak.cs" />
     <Compile Include="Model\Sporcular.cs" />

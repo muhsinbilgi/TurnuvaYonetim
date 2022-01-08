@@ -2926,6 +2926,7 @@
     <Content Include="Views\Maclar\Gruplar.cshtml" />
     <Content Include="Views\FiksturMotoru\Index.cshtml" />
     <Content Include="Views\Maclar\Detay.cshtml" />
+    <Content Include="Views\Maclar\DetayEkle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
