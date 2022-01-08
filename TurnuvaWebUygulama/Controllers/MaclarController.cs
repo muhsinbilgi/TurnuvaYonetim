@@ -41,6 +41,16 @@ namespace TurnuvaWebUygulama.Controllers
         }
 
 
+        public ActionResult Detay(int Id)
+        {
+
+            MacDetay model = new MacDetay();
+            model = MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetbyId, new { Id = Id}).FirstOrDefault();
+
+
+                       
+            return View(model);
+        }
 
 
 
@@ -51,8 +61,7 @@ namespace TurnuvaWebUygulama.Controllers
 
 
 
-  
-    
+
 
     }
 }

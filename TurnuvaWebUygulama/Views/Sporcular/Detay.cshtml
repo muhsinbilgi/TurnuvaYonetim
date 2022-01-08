@@ -47,14 +47,21 @@
                 @if (@ViewBag.onay == 1)
                 {
                     <li class="list-group-item">
-                        <i class="fa fa-check-square-o"></i> <span class="badge badge-success">Onaylı</span>
+                        <i class="fa fa-check-square-o"></i> <span class="badge badge-success">Evraklar Kabul Edildi</span>
                     </li>
                 }
                 @if (@ViewBag.onay == 2)
                 {
                     <li class="list-group-item">
-                        <i class="fa fa-exclamation-triangle"></i> <span class="badge badge-danger">Reddedildi</span>
+                        <i class="fa fa-exclamation-triangle"></i> <span class="badge badge-danger">Evraklar Reddedildi.</span>
                     </li>
+                }
+
+                @if (@ViewBag.onay == 0)
+                {
+            <li class="list-group-item">
+                <i class="fa fa-calculator"></i> <span class="badge badge-warning">Evraklar İnceleniyor.</span>
+            </li>
                 }
 
             </ul>

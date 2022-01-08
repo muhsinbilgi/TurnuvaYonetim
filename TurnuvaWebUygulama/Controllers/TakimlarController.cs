@@ -118,8 +118,8 @@ namespace TurnuvaWebUygulama.Controllers
 
 
             }
-
-            model.TurnuvaId = 1;
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            model.TurnuvaId = m.SeciliTurnuva;
           
             ViewBag.Basari = 1;
 

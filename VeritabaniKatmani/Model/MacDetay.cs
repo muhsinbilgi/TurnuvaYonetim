@@ -1,10 +1,6 @@
-﻿using VeritabaniKatmani.Interface;
+﻿using System;
+using VeritabaniKatmani.Interface;
 using VeritabaniKatmani.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VeritabaniKatmani
 {
@@ -12,9 +8,23 @@ namespace VeritabaniKatmani
     {
         public int Id { get; set; }
         public int MacId { get; set; }
-        public int SporcuId { get; set; }
-        public int DetayId { get; set; }
+        public String BirinciTakimAdi { get; set; }
+        public String IkinciTakimAdi { get; set; }
+        public int SporcuAdi { get; set; }
+        public int Detayadi { get; set; }
         public string DetayDakika { get; set; }
+        public int BirinciTakimSkor { get; set; }
+        public int IkinciTakimSkor { get; set; }
+        public string BirinciTakimLogo { get; set; }
+        public string IkinciTakimLogo { get; set; }
+        public DateTime MacTarihSaat { get; set; }
+        public int Hafta { get; set; }
+
+
+
+
+
+
 
 
         public AbstractDapperRepository Repository { get; set; }

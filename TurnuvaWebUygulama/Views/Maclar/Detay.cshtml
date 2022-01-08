@@ -1,0 +1,42 @@
+﻿@model VeritabaniKatmani.MacDetay
+
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-4">
+    <aside class="profile-nav alt">
+        <section class="card">
+            <div class="card-header user-header alt bg-dark">
+                <div class="media">
+                   
+                        <img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.BirinciTakimLogo)" alt="Card image cap" />
+                        <h2 class="text-light display-6">@Html.DisplayFor(model => model.BirinciTakimAdi) @Html.DisplayFor(model => model.BirinciTakimSkor)  - @Html.DisplayFor(model => model.IkinciTakimSkor)  @Html.DisplayFor(model => model.IkinciTakimAdi)</h2>
+                        <img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.IkinciTakimLogo)" alt="Card image cap" />
+                    <div class="media-body">
+                        <p>@Html.DisplayFor(model => model.MacTarihSaat) | @Html.DisplayFor(model => model.Hafta)</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-map-marker"></i>  @Html.DisplayFor(model => model.Detayadi)                
+                </li>
+               
+            </ul>
+
+
+        
+
+        </section>
+    </aside>
+
+</div>
+
+
+
+

@@ -368,7 +368,38 @@ inner join statu st on st.Id = s.Statu";
 
         }
 
+        public static class MacDetay
+        {
+            public static string Insert => @"INSERT INTO `MacDetay`(`MacId`,`TakimId`,`SporcuId`,`DetayId`,`DetayDakika`) 
+                                                                 VALUES(@MacId,@TakimId,@SporcuId,@DetayId,@DetayDakika,)";
+            public static string Update => @"update `MacDetay` set
+                                         `MacId` = @MacId
+                                         `TakimId` = @TakimId
+                                         `SporcuId` = @SporcuId
+                                         `DetayId` = @DetayId
+                                         `DetayDakika` = @DetayDakika
+                                          where Id = @Id";
+            public static string Delete => "delete from MacDetay where Id = @Id";
+            public static string GetAll => @"select * from MacDetay";
 
+            public static string GetbyId => @"select 
+t1.Adi as BirinciTakimAdi,
+t2.Adi as IkinciTakimAdi,
+(select COUNT(*) from macdetay md1 where md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
+(select COUNT(*) from macdetay md1 where md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
+t1.Logo as BirinciTakimLogo,
+t2.Logo as IkinciTakimLogo,
+m.Hafta as Hafta
+from Maclar m
+inner join takimlar t1 on t1.Id = m.BirinciTakimId
+inner join takimlar t2 on t2.Id = m.IkinciTakimId
+inner join macdetay md on md.MacId = m.Id
+inner join sporcular s on s.Id = md.SporcuId
+inner join detay d on d.Id = md.DetayId
+ where m.Id = @Id";
+
+
+        }
 
 
 

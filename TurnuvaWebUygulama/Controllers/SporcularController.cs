@@ -247,7 +247,15 @@ namespace TurnuvaWebUygulama.Controllers
                                                  Value = i.Id.ToString()
                                              }).ToList();
 
+            List<SelectListItem> takimlar  = (from i in MvcDbHelper.Repository.GetAll<Takimlar>(Queries.Takimlar.GetAll).ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = i.Adi,
+                                                 Value = i.Id.ToString()
+                                             }).ToList();
+
             ViewBag.dgr = degerler;
+            ViewBag.tkm = takimlar;
 
             var model = MvcDbHelper.Repository.GetById<Sporcular>(Queries.Sporcular.GetbyId, new { Id = Id }).FirstOrDefault();
 
@@ -274,9 +282,8 @@ namespace TurnuvaWebUygulama.Controllers
 
             }
 
-            
-            model.TakimId = 1;
-            model.TurnuvaId = 1;
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            model.TurnuvaId = m.SeciliTurnuva; 
             ViewBag.Basari = 1;
 
 

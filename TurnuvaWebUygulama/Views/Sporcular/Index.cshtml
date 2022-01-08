@@ -61,6 +61,7 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col">Evraklar</th>
                     </tr>
                 </thead>
 
@@ -86,7 +87,27 @@
 
                             </td>
                             <td>@Html.ActionLink("Evrak Ekle", "EvrakEkle", "Sporcular", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })</td>
+                          
+                            <td>
+                                @if (item.Onay == 1)
+                                {
 
+                                    <i class="fa fa-check-square-o"></i> <span class="badge badge-success">Kabul Edildi</span>
+
+                                }
+                                @if (item.Onay == 2)
+                                {
+
+                                    <i class="fa fa-exclamation-triangle"></i> <span class="badge badge-danger">Reddedildi</span>
+
+                                }
+                                @if (item.Onay == 0)
+                                {
+                                    <i class="fa fa-calculator"></i> <span class="badge badge-warning">İnceleniyor.</span>
+                                }
+
+
+                            </td>
                         </tr>
 
                     </tbody>
