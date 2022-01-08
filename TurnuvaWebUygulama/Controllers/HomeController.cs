@@ -29,7 +29,7 @@ namespace TurnuvaWebUygulama.Controllers
 
             if(m.Rol == "Y") { 
 
-            List<SelectListItem> degerler = (from i in MvcDbHelper.Repository.GetById<Turnuva>(Queries.Turnuva.GetbyUser, new { Id = m.Id }).ToList()
+            List<SelectListItem> degerler = (from i in MvcDbHelper.Repository.GetById<Turnuva>(Queries.Turnuva.GetbyTur, new { Id = m.Id }).ToList()
                                              select new SelectListItem
                                              {
                                                  Text = i.Adi,
@@ -74,7 +74,7 @@ namespace TurnuvaWebUygulama.Controllers
             if (m.Rol == "Y")
             {
 
-                List<SelectListItem> degerler = (from i in MvcDbHelper.Repository.GetById<Turnuva>(Queries.Turnuva.GetbyUser, new { Id = m.Id }).ToList()
+                List<SelectListItem> degerler = (from i in MvcDbHelper.Repository.GetById<Turnuva>(Queries.Turnuva.GetbyTur, new { Id = m.Id }).ToList()
                                                  select new SelectListItem
                                                  {
                                                      Text = i.Adi,

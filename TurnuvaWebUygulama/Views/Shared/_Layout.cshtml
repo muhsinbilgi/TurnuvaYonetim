@@ -61,12 +61,11 @@
                         <a href="/Home"> <i class="menu-icon ti-home"></i>Genel</a>
                     </li>
                     <h3 class="menu-title">Müsabaka Yönetimi</h3><!-- /.menu-title -->
-                    @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
-                    {
+                 
                         <li>
                             <a href="/Maclar"> <i class="menu-icon ti-basketball"></i>Maçlar </a>
                         </li>
-                    }
+                    
 
                     @if (User.IsInRole("A") || User.IsInRole("Y"))
                     {

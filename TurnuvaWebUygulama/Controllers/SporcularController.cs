@@ -131,6 +131,7 @@ namespace TurnuvaWebUygulama.Controllers
                 model.TakimId = m.TakimId;
             }
 
+            /* Kullanıcı insert  */
             Kullanicilar Kullanici = new Kullanicilar();
             Kullanici.AdiSoyadi = model.Adi + ' ' + model.Soyadi;
             Kullanici.KullaniciAdi = model.Adi.Substring(0, 1) + model.Soyadi.ToLower();
@@ -138,14 +139,23 @@ namespace TurnuvaWebUygulama.Controllers
             Kullanici.Rol = "S";
             Kullanici.TakimId = model.TakimId;
             Kullanici.SeciliTurnuva = m.SeciliTurnuva;
-
             MvcDbHelper.Repository.Insert(Queries.Kullanicilar.Insert, Kullanici);
 
+            /* Sporcu insert */
             var MaxId = MvcDbHelper.Repository.GetAll<Kullanicilar>(Queries.Kullanicilar.GetbyMaxId).FirstOrDefault();
-
             model.KullaniciId = MaxId.MaxId;
             model.TurnuvaId = m.SeciliTurnuva;
             MvcDbHelper.Repository.Insert(Queries.Sporcular.Insert, model);
+
+            /* Kullanıcı Turnuva tablosuna iinsert */
+            KullaniciTurnuva Kt = new KullaniciTurnuva();
+            Kt.TurnuvaId = m.SeciliTurnuva;
+            Kt.KullaniciId = MaxId.MaxId;
+            MvcDbHelper.Repository.Insert(Queries.KullaniciTurnuva.Insert, Kt);
+
+
+
+
             ViewBag.Basari = 1;
             ViewBag.KullaniciAdi = Kullanici.KullaniciAdi;
             ViewBag.Parola = Kullanici.Parola;

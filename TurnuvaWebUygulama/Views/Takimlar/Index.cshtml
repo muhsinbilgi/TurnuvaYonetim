@@ -55,16 +55,20 @@
                             <td>@Html.DisplayFor(modelItem => item.Konum)</td>
                             <td>@Html.ActionLink("Detay", "Detay", "Takimlar", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })</td>
                             <td>@Html.ActionLink("Düzenle", "Duzenle", "Takimlar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })</td>
-                            <td>
-                                @using (Html.BeginForm("Sil", "Takimlar", new { Id = item.Id }, FormMethod.Post))
-                                {
-                                    <button class="btn btn-danger btn-sm">Sil</button>
-                                }
+                            @if (User.IsInRole("A") || User.IsInRole("Y"))
+                            {
+                                <td>
 
-                            </td>
+                                    @using (Html.BeginForm("Sil", "Takimlar", new { Id = item.Id }, FormMethod.Post))
+                                    {
+                                        <button class="btn btn-danger btn-sm">Sil</button>
+                                    }
+                                   
 
+                                </td>
 
-                        </tr>
+                                 }
+                            </tr>
 
                     </tbody>
                 }

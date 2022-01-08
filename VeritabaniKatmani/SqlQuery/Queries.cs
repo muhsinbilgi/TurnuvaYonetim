@@ -101,6 +101,10 @@ namespace VeritabaniKatmani.SqlQuery
                                              inner join kullanicilar u on u.Id = t.YoneticiKullaniciId";
             public static string GetbyId => "select * from turnuva where Id = @Id";
             public static string GetbyUser => "select * from turnuva where YoneticiKullaniciId = @Id";
+
+            public static string GetbyTur => @"select t.id,t.Adi from turnuva t
+                                               inner join kullaniciturnuva k on k.TurnuvaId = t.Id
+                                               where k.KullaniciId = @Id";
         }                                                                        
 
         public static class Takimlar

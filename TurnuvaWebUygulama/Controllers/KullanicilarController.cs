@@ -87,12 +87,12 @@ namespace TurnuvaWebUygulama.Controllers
            
 
 
-
+            /*Kullanıcı tablosuna inser */
                 model.SeciliTurnuva = m.SeciliTurnuva;
                 MvcDbHelper.Repository.Insert(Queries.Kullanicilar.Insert, model);
 
 
-
+            /* Kullanıcıturnuva tablosuna insert */
             var MaxId = MvcDbHelper.Repository.GetAll<Kullanicilar>(Queries.Kullanicilar.GetbyMaxId).FirstOrDefault();
             KullaniciTurnuva Kt = new KullaniciTurnuva();
             Kt.TurnuvaId = m.SeciliTurnuva;
