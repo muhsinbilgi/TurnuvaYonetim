@@ -8,10 +8,12 @@
 
 
 
+
+
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
-            <div class="page-item">
+            <div class="page-title">
                 @Html.ActionLink("Maçlar", "Index", "Maclar", new { @class = "btn btn-success btn-lg" })
                 @Html.ActionLink("Gruplar", "Gruplar", "Maclar", new { @class = "btn btn-success btn-lg" })
             </div>
@@ -21,6 +23,10 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
+                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                    {
+                    <li class="active"> @Html.ActionLink("Maç Ekle", "Ekle", "Maclar", new { @class = "btn btn-success btn-lg" })</li>
+                    }
                 </ol>
             </div>
         </div>
@@ -46,6 +52,8 @@
                             <th scope="col">Saat</th>
                             <th scope="col">Takım Adı</th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                             <th scope="col">Takım Adı</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
@@ -62,10 +70,29 @@
                                     <td>@Html.DisplayFor(modelItem => item.Tarih)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Saat)</td>
                                     <td>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BirinciTakimSkor)</td>
                                     <td>-</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IkinciTakimSkor)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IkinciTakimAdi)</td>
-                                    <td>@Html.ActionLink("Maç Detayı", "Detay", "Maclar", new { id = item.Id }, new { @class = "btn btn-secondary" })</td>
-                                    <td>@Html.ActionLink("Detay Ekle", "DetayEkle", "Maclar", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })</td>
+                                    <td>
+                                        @Html.ActionLink("Maç Detayı", "Detay", "Maclar", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+                                        @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
+                                        {
+                                            @Html.ActionLink("Detay Ekle", "DetayEkle", "Maclar", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
+                                        }
+                                    </td>
+                                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                                    {
+                                        <td>
+                                            @using (Html.BeginForm("Sil", "Maclar", new { Id = item.Id }, FormMethod.Post))
+                                            {
+
+                                                <button class="btn btn-danger btn-sm">Sil</button>
+                                            }
+                                        </td>
+                                    }
+
+
 
                                 </tr>
 

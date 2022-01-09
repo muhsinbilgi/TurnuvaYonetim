@@ -39,7 +39,7 @@
             <tr>
                 @if (item.BirinciTakimId == item.TakimId)
                 {
-                <td align="right">
+                <td align="right" width="46%">
 
                     @Html.DisplayFor(model => item.SporcuAdi) &nbsp;&nbsp;
                     @if (item.DetayId == 1)
@@ -64,12 +64,12 @@
                 }
                 else
                 {
-                    <td></td>
+            <td width="46%">&nbsp;</td>
                 }
-                <td align="center"> @Html.DisplayFor(model => item.DetayDakika)'</td>
+                <td align="center" width="8%"> @Html.DisplayFor(model => item.DetayDakika)'</td>
                 @if (item.IkinciTakimId == item.TakimId)
                 {
-            <td align="left">
+            <td align="left" width="46%">
                 @if (item.DetayId == 1)
                 {
                     <i class="fa fa-soccer-ball-o"></i>
@@ -92,7 +92,7 @@
                 }
                 else
                 {
-                    <td></td>
+            <td width="46%">&nbsp;</td>
                 }
             </tr>
                 }

@@ -13,6 +13,7 @@ namespace VeritabaniKatmani
         public String IkinciTakimAdi { get; set; }
         public int BirinciTakimId { get; set; }
         public int IkinciTakimId { get; set; }
+        public int SporcuId { get; set; }
         public String SporcuAdi { get; set; }
         public String Detayadi { get; set; }
         public int DetayId { get; set; }
@@ -22,7 +23,7 @@ namespace VeritabaniKatmani
         public string BirinciTakimLogo { get; set; }
         public string IkinciTakimLogo { get; set; }
         public DateTime MacTarihSaat { get; set; }
-        public int Hafta { get; set; }
+        public string Hafta { get; set; }
 
 
 

@@ -19,7 +19,8 @@ namespace VeritabaniKatmani
         public int TurnuvaId { get; set; }
         public string BirinciTakimAdi { get; set; }
         public string IkinciTakimAdi { get; set; }
-
+        public int BirinciTakimSkor{ get; set; }
+        public int IkinciTakimSkor { get; set; }
         public int MaxHafta { get; set; }
 
 

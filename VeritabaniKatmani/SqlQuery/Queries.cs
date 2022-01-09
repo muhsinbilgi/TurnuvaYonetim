@@ -80,7 +80,30 @@ namespace VeritabaniKatmani.SqlQuery
             public static string GetAll => @"select * from evrakturu";
             public static string GetbyId => "select * from evrakturu where Id = @Id";
         }
+        public static class Detay
+        {
+            public static string Insert => @"INSERT INTO `Detay`(`Adi`,`KategoriId`) 
+                                                                 VALUES(@Adi,@KategoriId)";
+            public static string Update => @"update `Detay` set
+                                         `Adi` = @Adi,
+                                        `KategoriId` = @KategoriId
+                                          where Id = @Id";
+            public static string Delete => "delete from Detay where Id = @Id";
+            public static string GetAll => @"select * from Detay";
+            public static string GetbyId => "select * from Detay where Id = @Id";
+        }
 
+        public static class Hafta
+        {
+            public static string Insert => @"INSERT INTO `Hafta`(`Adi`,) 
+                                                                 VALUES(@Adi)";
+            public static string Update => @"update `Hafta` set
+                                         `Adi` = @Adi
+                                          where Id = @Id";
+            public static string Delete => "delete from Hafta where Id = @Id";
+            public static string GetAll => @"select * from Hafta";
+            public static string GetbyId => "select * from Hafta where Id = @Id";
+        }
         public static class Turnuva
         {
             public static string Insert => @"INSERT INTO `turnuva`(`Adi`,`KategoriId`,`YoneticiKullaniciId`,`Logo`) 
@@ -175,39 +198,45 @@ namespace VeritabaniKatmani.SqlQuery
                                            where Id = @Id";
 
             public static string GetAll => @"select
-s.*,
-t.Adi as TakımAdi,
-st.Adi as StatuAdi
-from sporcular s
-inner join takimlar t on t.Id = s.TakimId
-inner join statu st on st.Id = s.Statu";
+                                             s.*,
+                                             t.Adi as TakımAdi,
+                                             st.Adi as StatuAdi
+                                             from sporcular s
+                                             inner join takimlar t on t.Id = s.TakimId
+                                             inner join statu st on st.Id = s.Statu";
             public static string GetbyId => @"select 
- s.*,
- t.Adi as TakımAdi,
- st.Adi as StatuAdi
- from sporcular s
- inner join takimlar t on t.Id = s.TakimId
- inner join statu st on st.Id = s.Statu
- where s.Id = @Id";
+                                             s.*,
+                                             t.Adi as TakımAdi,
+                                             st.Adi as StatuAdi
+                                             from sporcular s
+                                             inner join takimlar t on t.Id = s.TakimId
+                                             inner join statu st on st.Id = s.Statu
+                                             where s.Id = @Id";
 
             public static string GetSearch => @"select 
- s.*,
- t.Adi as TakımAdi,
- st.Adi as StatuAdi
- from sporcular s
- inner join takimlar t on t.Id = s.TakimId
- inner join statu st on st.Id = s.Statu
- where t.Adi like @TakimAdi or s.Adi like @SporcuAdi";
-
+                                              s.*,
+                                              t.Adi as TakımAdi,
+                                              st.Adi as StatuAdi
+                                              from sporcular s
+                                              inner join takimlar t on t.Id = s.TakimId
+                                              inner join statu st on st.Id = s.Statu
+                                              where t.Adi like @TakimAdi or s.Adi like @SporcuAdi";
+                                             
 
             /* Yönetici için : */
-            public static string GetbyY => "select * from sporcular s where s.TurnuvaId = @TurnuvaId";
+            public static string GetbyY => @"select t.Adi as TakimAdi,s.* from sporcular s 
+                                             left join takimlar t on t.Id = s.TakimId
+                                            where s.TurnuvaId = @TurnuvaId";
 
             /* Takım Sorumlusu için : */
-            public static string GetbyT => "select * from sporcular s where s.TakimId= @TakimId";
+            public static string GetbyT => @"select t.Adi as TakimAdi,s.* from sporcular s 
+                                             left join takimlar t on t.Id = s.TakimId
+                                             where s.TakimId= @TakimId";
 
             /* Sporcu için : */
-            public static string GetbyS => "select * from sporcular s where s.KullaniciId= @KullaniciId";
+            public static string GetbyS => @"select t.Adi as TakimAdi,s.* from sporcular s 
+                                             left join takimlar t on t.Id = s.TakimId
+                                             where s.KullaniciId= @KullaniciId";
 
         }
 
@@ -256,8 +285,8 @@ inner join statu st on st.Id = s.Statu";
 
         public static class Maclar
         {
-            public static string Insert => @"INSERT INTO `maclar`(`Tarih`,`Saat`,`BirinciTakimId`,`IkinciTakimId`,`Bay`,`Hafta`,`TurnuvaId`) 
-                                                                 VALUES(@Tarih,@Saat,@BirinciTakimId,@IkinciTakimId,@Bay,@Hafta,@TurnuvaId)";
+            public static string Insert => @"INSERT INTO `maclar`(`TarihSaat`,`BirinciTakimId`,`IkinciTakimId`,`Bay`,`Hafta`,`TurnuvaId`) 
+                                                                 VALUES(@TarihSaat,@BirinciTakimId,@IkinciTakimId,@Bay,@Hafta,@TurnuvaId)";
             public static string Update => @"update `maclar` set
                                          `Tarih` = @Tarih,
                                           `Saat`= @Saat,
@@ -265,16 +294,32 @@ inner join statu st on st.Id = s.Statu";
                                           `IkinciTakimId`= @IkinciTakimId,
                                           `Bay`= @Bay,
                                           `Hafta`= @Hafta,
-                                          `TurnuvaId` = @TurnuvaId
+                                          `TurnuvaId` = @TurnuvaId,
+                                          `BirinciTakimSkor` = @BirinciTakimSkor,
+                                          `IkinciTakimSkor` = @IkinciTakimSkor
+                                          where Id = @Id";
+
+            public static string SkorUpdate => @"update `maclar` set
+                                         `BirinciTakimSkor` = @BirinciTakimSkor,
+                                          `IkinciTakimSkor` = @IkinciTakimSkor
                                           where Id = @Id";
             public static string Delete => "delete from maclar where Id = @Id";
             public static string GetAll => @"select 
-                                             m.*,
-                                             t1.Adi as BirinciTakimAdi,
-                                             t2.Adi as IkinciTakimAdi
-                                             from maclar m
-                                             inner join takimlar t1 on t1.Id = m.BirinciTakimId
-                                             inner join takimlar t2 on t2.Id = m.IkinciTakimId";
+                                             m.Id,
+                                             m.TarihSaat,
+                                             m.BirinciTakimId,
+                                             m.IkinciTakimId,
+                                             m.Bay,
+                                             h.Adi as Hafta,
+                                             m.TurnuvaId,
+                                             m.BirinciTakimSkor,
+                                             m.IkinciTakimSkor,
+                                              t1.Adi as BirinciTakimAdi,
+                                              t2.Adi as IkinciTakimAdi
+                                              from maclar m
+                                              inner join Hafta h on h.Id = m.Hafta
+                                              inner join takimlar t1 on t1.Id = m.BirinciTakimId
+                                              inner join takimlar t2 on t2.Id = m.IkinciTakimId";
 
          
             public static string GetbyId => "select * from maclar where Id = @Id";
@@ -343,7 +388,9 @@ inner join statu st on st.Id = s.Statu";
 
         public static class MacHaftalari
         {
-            public static string GetbyId => "select Hafta from maclar where TurnuvaId = @TurnuvaId group by Hafta";
+            public static string GetbyId => @"select h.Adi as Hafta from maclar m
+                                             left join Hafta h on h.id = m.Hafta
+                                             where m.TurnuvaId = @TurnuvaId group by m.Hafta";
 
         }
 
@@ -371,7 +418,7 @@ inner join statu st on st.Id = s.Statu";
         public static class MacDetay
         {
             public static string Insert => @"INSERT INTO `MacDetay`(`MacId`,`TakimId`,`SporcuId`,`DetayId`,`DetayDakika`) 
-                                                                 VALUES(@MacId,@TakimId,@SporcuId,@DetayId,@DetayDakika,)";
+                                                                 VALUES(@MacId,@TakimId,@SporcuId,@DetayId,@DetayDakika)";
             public static string Update => @"update `MacDetay` set
                                          `MacId` = @MacId
                                          `TakimId` = @TakimId
@@ -390,12 +437,13 @@ t1.Adi as BirinciTakimAdi,
 t2.Adi as IkinciTakimAdi,
 t1.Id as BirinciTakimId,
 t2.Id as IkinciTakimId,
+md.SporcuId,
 concat(s.Adi,' ',s.Soyadi) as SporcuAdi,
 d.Adi as Detayadi,
 md.DetayId,
 md.DetayDakika,
-(select COUNT(*) from macdetay md1 where md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
-(select COUNT(*) from macdetay md1 where md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
+(select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
+(select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
 t1.Logo as BirinciTakimLogo,
 t2.Logo as IkinciTakimLogo,
 m.TarihSaat as MacTarihSaat,
@@ -420,31 +468,32 @@ select
 m.IkinciTakimId as Id,
 t2.Adi
 from Maclar m
-inner join Takimlar t2 on t2.Id = m.BirinciTakimId
+inner join Takimlar t2 on t2.Id = m.IkinciTakimId
 where m.Id = @Id";
 
         }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

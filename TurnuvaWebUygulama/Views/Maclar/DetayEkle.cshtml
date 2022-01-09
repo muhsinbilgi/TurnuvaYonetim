@@ -5,6 +5,38 @@
 }
 @model VeritabaniKatmani.MacDetay
 
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(function () {
+        $('#TakimId').change(function () {
+            var id = $('#TakimId').val();
+            $.ajax({
+                url: '/Maclar/TakimSporcu',
+                data: { Id : id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#SporcuId').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#SporcuId').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
@@ -26,23 +58,27 @@
 
                     <hr>
 
-                    @using (Html.BeginForm("DetayEkle", "Maclar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("DetayEkle", "Maclar", FormMethod.Post))
                     {
 
 
                 <div class="form-group has-success">
                     <div class="form-group">
                         <label for="TakimId" class="control-label mb-1">Takım Seç</label>
-                        @Html.DropDownListFor(m => m.TakimId, (List<SelectListItem>)ViewBag.tkm, new { @id = "select", @class = "form-control" })
+                        @Html.DropDownListFor(m => m.TakimId, (List<SelectListItem>)ViewBag.tkm, new { @id = "TakimId", @class = "form-control" })
                     </div>
                     <div class="form-group">
-                      
-                      
+                        <label for="SporcuId" class="control-label mb-1">Sporcu Seç</label>
+                        @Html.DropDownListFor(m => m.SporcuId, (List<SelectListItem>)ViewBag.spr, new { @id = "SporcuId", @class = "form-control" })
                     </div>
                     <div class="form-group">
-                       
-                      
+                        <label for="DetayId" class="control-label mb-1">Detay Seç</label>
+                        @Html.DropDownListFor(m => m.DetayId, (List<SelectListItem>)ViewBag.dty, new { @id = "DetayId", @class = "form-control" })
                     </div>
+
+
+
+
                     <div class="form-group">
                         <label for="DetayDakika" class="control-label mb-1">Detay Dakika</label>
                         @Html.TextBoxFor(m => m.DetayDakika, new { @id = "cc-name", @class = "form-control" })
@@ -71,9 +107,9 @@
 
                 </div>
 
-                </div>
-            </div> <!-- .card -->
+            </div>
+        </div> <!-- .card -->
 
 
-        </div>
+    </div>
 

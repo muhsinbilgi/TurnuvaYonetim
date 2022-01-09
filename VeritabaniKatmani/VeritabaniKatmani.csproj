@@ -99,11 +99,13 @@
     <Compile Include="Model\GrupAdlari.cs" />
     <Compile Include="Model\Gruplar.cs" />
     <Compile Include="Model\GrupListele.cs" />
+    <Compile Include="Model\Hafta.cs" />
     <Compile Include="Model\Kategori.cs" />
     <Compile Include="Model\KayitSayi.cs" />
     <Compile Include="Model\KullaniciTurnuva.cs" />
     <Compile Include="Model\Kullanicilar.cs" />
     <Compile Include="Model\MacDetay.cs" />
+    <Compile Include="Model\MacDetayTakimSporcu.cs" />
     <Compile Include="Model\MacGorevlileri.cs" />
     <Compile Include="Model\MacHaftalari.cs" />
     <Compile Include="Model\Maclar.cs" />
