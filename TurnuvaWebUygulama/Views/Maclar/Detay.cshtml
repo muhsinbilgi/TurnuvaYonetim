@@ -6,6 +6,8 @@
 }
 
 
+
+
 <div class="col-lg-7">
     <aside class="profile-nav alt">
         <section class="card">
@@ -21,9 +23,9 @@
                         <td rowspan="2" width="20%"><img class="rounded-circle mx-auto d-block" src="~/Image/@Html.DisplayFor(model => model.MacDetay.IkinciTakimLogo)" width="100" height="100" /></td>
                     </tr>
                     <tr>
-                       
+
                         <td colspan="5" align="center" width="60%"><p>@Html.DisplayFor(model => model.MacDetay.MacTarihSaat) | @Html.DisplayFor(model => model.MacDetay.Hafta) Hafta</p></td>
-                       
+
 
                     </tr>
                 </table>
@@ -36,65 +38,72 @@
                 </tr>
                 @foreach (var item in Model.Detaylar)
                 {
-            <tr>
-                @if (item.BirinciTakimId == item.TakimId)
-                {
-                <td align="right" width="46%">
+                    <tr>
+                        @if (item.BirinciTakimId == item.TakimId)
+                        {
+                        <td align="right" width="46%">
+                            @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
+                            {
+                            @Html.ActionLink("Sil", "DetaySil", "Maclar", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                            }
+                            @Html.DisplayFor(model => item.SporcuAdi) &nbsp;&nbsp;
+                            @if (item.DetayId == 1)
+                            {
+                                <i class="fa fa-soccer-ball-o"></i>
+                            }
+                            else if (item.DetayId == 2)
+                            {
+                                <i class="fa fa-square-o"></i>
+                            }
+                            else if (item.DetayId == 3)
+                            {
+                                <i class="fa fa-square"></i>
+                            }
+                            else if (item.DetayId == 4)
+                            {
+                                <i class="fa fa-exchange"></i>
+                            }
 
-                    @Html.DisplayFor(model => item.SporcuAdi) &nbsp;&nbsp;
-                    @if (item.DetayId == 1)
-                    {
-                        <i class="fa fa-soccer-ball-o"></i>
-                    }
-                    else if (item.DetayId == 2)
-                    {
-                        <i class="fa fa-square-o"></i>
-                    }
-                    else if (item.DetayId == 3)
-                    {
-                        <i class="fa fa-square"></i>
-                    }
-                    else if (item.DetayId == 4)
-                    {
-                        <i class="fa fa-exchange"></i>
-                    }
 
-
-                </td>
-                }
-                else
-                {
-            <td width="46%">&nbsp;</td>
-                }
-                <td align="center" width="8%"> @Html.DisplayFor(model => item.DetayDakika)'</td>
-                @if (item.IkinciTakimId == item.TakimId)
-                {
-            <td align="left" width="46%">
-                @if (item.DetayId == 1)
-                {
-                    <i class="fa fa-soccer-ball-o"></i>
-                }
-                else if (item.DetayId == 2)
-                {
-                    <i class="fa fa-square-o"></i>
-                }
-                else if (item.DetayId == 3)
-                {
-                    <i class="fa fa-square"></i>
-                }
-                else if (item.DetayId == 4)
-                {
-                    <i class="fa fa-exchange"></i>
-                }
-                &nbsp;&nbsp;
-                @Html.DisplayFor(model => item.SporcuAdi)
-            </td>
-                }
-                else
-                {
-            <td width="46%">&nbsp;</td>
-                }
-            </tr>
+                        </td>
+                        }
+                        else
+                        {
+                            <td width="46%">&nbsp;</td>
+                        }
+                        <td align="center" width="8%"> @Html.DisplayFor(model => item.DetayDakika)'</td>
+                        @if (item.IkinciTakimId == item.TakimId)
+                        {
+                    <td align="left" width="46%">
+                        @if (item.DetayId == 1)
+                        {
+                            <i class="fa fa-soccer-ball-o"></i>
+                        }
+                        else if (item.DetayId == 2)
+                        {
+                            <i class="fa fa-square-o"></i>
+                        }
+                        else if (item.DetayId == 3)
+                        {
+                            <i class="fa fa-square"></i>
+                        }
+                        else if (item.DetayId == 4)
+                        {
+                            <i class="fa fa-exchange"></i>
+                        }
+                        &nbsp;&nbsp;
+                        @Html.DisplayFor(model => item.SporcuAdi)
+                        @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
+                        {
+                            @Html.ActionLink("sil", "DetaySil", "Maclar", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                        }
+                        </td>
+                        }
+                        else
+                        {
+                            <td width="46%">&nbsp;</td>
+                        }
+                    </tr>
                 }
                 <tr>
                     <td colspan="3" align="center" class="table table-info">M.S @Html.DisplayFor(model => model.MacDetay.BirinciTakimSkor) - @Html.DisplayFor(model => model.MacDetay.IkinciTakimSkor)</td>
@@ -111,5 +120,6 @@
     </aside>
 
 </div>
+
 
 

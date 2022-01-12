@@ -417,45 +417,47 @@ namespace VeritabaniKatmani.SqlQuery
 
         public static class MacDetay
         {
-            public static string Insert => @"INSERT INTO `MacDetay`(`MacId`,`TakimId`,`SporcuId`,`DetayId`,`DetayDakika`) 
+            public static string Insert => @"INSERT INTO `macdetay`(`MacId`,`TakimId`,`SporcuId`,`DetayId`,`DetayDakika`) 
                                                                  VALUES(@MacId,@TakimId,@SporcuId,@DetayId,@DetayDakika)";
-            public static string Update => @"update `MacDetay` set
+            public static string Update => @"update `macdetay` set
                                          `MacId` = @MacId
                                          `TakimId` = @TakimId
                                          `SporcuId` = @SporcuId
                                          `DetayId` = @DetayId
                                          `DetayDakika` = @DetayDakika
                                           where Id = @Id";
-            public static string Delete => "delete from MacDetay where Id = @Id";
-            public static string GetAll => @"select * from MacDetay";
+            public static string Delete => "delete from macdetay where Id = @Id";
+            public static string GetAll => @"select * from macdetay";
 
             public static string GetbyId => @"select 
-md.Id,
-m.Id as MacId,
-md.TakimId,
-t1.Adi as BirinciTakimAdi,
-t2.Adi as IkinciTakimAdi,
-t1.Id as BirinciTakimId,
-t2.Id as IkinciTakimId,
-md.SporcuId,
-concat(s.Adi,' ',s.Soyadi) as SporcuAdi,
-d.Adi as Detayadi,
-md.DetayId,
-md.DetayDakika,
-(select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
-(select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
-t1.Logo as BirinciTakimLogo,
-t2.Logo as IkinciTakimLogo,
-m.TarihSaat as MacTarihSaat,
-m.Hafta as Hafta
-from Maclar m
-inner join takimlar t1 on t1.Id = m.BirinciTakimId
-inner join takimlar t2 on t2.Id = m.IkinciTakimId
-left join macdetay md on md.MacId = m.Id
-left join sporcular s on s.Id = md.SporcuId
-left join detay d on d.Id = md.DetayId
- where m.Id = @Id
-order by md.DetayDakika asc";
+                                             md.Id,
+                                             m.Id as MacId,
+                                             md.TakimId,
+                                             t1.Adi as BirinciTakimAdi,
+                                             t2.Adi as IkinciTakimAdi,
+                                             t1.Id as BirinciTakimId,
+                                             t2.Id as IkinciTakimId,
+                                             md.SporcuId,
+                                             concat(s.Adi,' ',s.Soyadi) as SporcuAdi,
+                                             d.Adi as Detayadi,
+                                             md.DetayId,
+                                             md.DetayDakika,
+                                             (select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t1.Id and md1.DetayId = 1) as BirinciTakimSkor,
+                                             (select COUNT(*) from macdetay md1 where md1.MacId = m.Id and md1.TakimId = t2.Id and md1.DetayId = 1) as IkinciTakimSkor,
+                                             t1.Logo as BirinciTakimLogo,
+                                             t2.Logo as IkinciTakimLogo,
+                                             m.TarihSaat as MacTarihSaat,
+                                             m.Hafta as Hafta
+                                             from Maclar m
+                                             inner join takimlar t1 on t1.Id = m.BirinciTakimId
+                                             inner join takimlar t2 on t2.Id = m.IkinciTakimId
+                                             left join macdetay md on md.MacId = m.Id
+                                             left join sporcular s on s.Id = md.SporcuId
+                                             left join detay d on d.Id = md.DetayId
+                                              where m.Id = @Id
+                                             order by md.DetayDakika asc";
+
+            public static string GetbyDetayId => "select * from macdetay where  Id = @Id";
 
             public static string GetTkm => @"select 
 m.BirinciTakimId as Id,
@@ -473,27 +475,58 @@ where m.Id = @Id";
 
         }
 
+        public static class GenelBilgiler
+        {
+            public static string istatistikler => @"select
+                                        (select COUNT(*) from sporcular s where s.TurnuvaId = trn.id) as SporcuSayisi,
+                                        (select COUNT(*) from takimlar t where t.TurnuvaId = trn.id) as TakimSayisi,
+                                        (select COUNT(*) from macdetay md inner join takimlar tk on tk.Id = md.TakimId where md.DetayId = 1 and tk.TurnuvaId = trn.id) as AtilanGol,
+                                        (select COUNT(*) from macdetay md inner join takimlar tk on tk.Id = md.TakimId where md.DetayId = 2 and tk.TurnuvaId = trn.id) as SarikartSayisi,
+                                        (select COUNT(*) from macdetay md inner join takimlar tk on tk.Id = md.TakimId where md.DetayId = 3 and tk.TurnuvaId = trn.id) as KirmizikartSayisi
+                                        from turnuva trn
+                                         where trn.Id = @Id";
+
+            public static string golkralligi => @"select
+                                         s.Resim,
+                                         tk.Adi as TakimAdi,
+                                         concat(s.Adi,' ',s.Soyadi) as AdiSoyadi,
+                                         COUNT(*) as GolSayisi
+                                         from macdetay md 
+                                         left join sporcular s on s.id = md.SporcuId
+                                         left join takimlar tk on tk.Id = s.TakimId
+                                         where md.DetayId = 1 and s.TurnuvaId = @Id
+                                         GROUP BY md.SporcuId,md.DetayId";
+            public static string centilmenlik => @"select
+                                         tk.Adi as TakimAdi,
+                                         (SELECT COUNT(*) from macdetay md where md.TakimId = tk.Id and md.DetayId = 2) as SarikartSayisi,
+                                         (SELECT COUNT(*) from macdetay md where md.TakimId = tk.Id and md.DetayId = 3) as KirmizikartSayisi
+                                         from takimlar tk
+                                         where tk.TurnuvaId = @Id
+                                         ORDER BY (KirmizikartSayisi+SarikartSayisi) desc";
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

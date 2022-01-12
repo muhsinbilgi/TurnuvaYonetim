@@ -61,11 +61,13 @@
                         <a href="/Home"> <i class="menu-icon ti-home"></i>Genel</a>
                     </li>
                     <h3 class="menu-title">Müsabaka Yönetimi</h3><!-- /.menu-title -->
-                 
-                        <li>
-                            <a href="/Maclar"> <i class="menu-icon ti-basketball"></i>Maçlar </a>
-                        </li>
-                    
+
+                    <li>
+                        <a href="/Maclar"> <i class="menu-icon ti-basketball"></i>Maçlar </a>
+                    </li>
+                    <li>
+                        <a href="/Maclar/Gruplar"> <i class="menu-icon ti-stats-up"></i>Puan Durumu </a>
+                    </li>
 
                     @if (User.IsInRole("A") || User.IsInRole("Y"))
                     {
@@ -73,9 +75,7 @@
                             <a href="/FiksturMotoru"> <i class="menu-icon ti-ruler-pencil"></i>Fikstür Motoru </a>
                         </li>
                     }
-                    <li>
-                        <a href="widgets.html"> <i class="menu-icon ti-stats-up"></i>İstatistikler </a>
-                    </li>
+
 
                     <h3 class="menu-title">Tanımlama</h3><!-- /.menu-title -->
                     @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("T") || User.IsInRole("S"))
@@ -118,10 +118,10 @@
                             <a href="widgets.html"> <i class="menu-icon ti-clipboard"></i>Raporlar </a>
                         </li>
                     }
-                    @if (User.IsInRole("A"))
+                    @if (User.IsInRole("A")|| User.IsInRole("Y"))
                     {
                         <li>
-                            <a href="widgets.html"> <i class="menu-icon ti-settings"></i>Ayarlar </a>
+                            <a href="/Home/Ayarlar"> <i class="menu-icon ti-settings"></i>Ayarlar </a>
                         </li>
                     }
                 </ul>

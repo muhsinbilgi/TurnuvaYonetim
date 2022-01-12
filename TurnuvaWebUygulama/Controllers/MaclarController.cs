@@ -170,6 +170,42 @@ namespace TurnuvaWebUygulama.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult DetaySil(int Id)
+        {
+            
+
+            MacDetay model = new MacDetay() { Id = Id };
+            model = MvcDbHelper.Repository.GetById<MacDetay>(Queries.MacDetay.GetbyDetayId, new { Id = Id }).FirstOrDefault();
+
+            MvcDbHelper.Repository.Delete<MacDetay>(Queries.MacDetay.Delete, model);
+
+
+            Maclar MacSkor = new Maclar();
+           
+            MacSkor = MvcDbHelper.Repository.GetById<Maclar>(Queries.MacDetay.GetbyId, new { Id = model.MacId}).FirstOrDefault();
+
+
+            MacSkor.Id = model.MacId;
+
+            if (model.DetayId == 1 && model.TakimId == MacSkor.BirinciTakimId)
+            {
+
+                MvcDbHelper.Repository.Update(Queries.Maclar.SkorUpdate, MacSkor);
+            }
+            if (model.DetayId == 1 && model.TakimId == MacSkor.IkinciTakimId)
+            {
+
+                MvcDbHelper.Repository.Update(Queries.Maclar.SkorUpdate, MacSkor);
+            }
+
+
+
+
+
+
+            return RedirectToAction("Index");
+        }
+
 
         public ActionResult Ekle()
         {

@@ -13,7 +13,16 @@ namespace TurnuvaWebUygulama.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+
+            int Id = m.SeciliTurnuva;
+
+            GenelBilgiler model = new GenelBilgiler();          
+            model.Istatistikler = MvcDbHelper.Repository.GetById<Istatistikler>(Queries.GenelBilgiler.istatistikler, new { Id = Id }).FirstOrDefault();
+            model.GolKralligi = MvcDbHelper.Repository.GetById<GolKralligi>(Queries.GenelBilgiler.golkralligi, new { Id = Id }).ToList();
+            model.Centilmenlik = MvcDbHelper.Repository.GetById<Centilmenlik>(Queries.GenelBilgiler.centilmenlik, new { Id = Id }).ToList();
+
+            return View(model);
 
         }
 
@@ -68,6 +77,9 @@ namespace TurnuvaWebUygulama.Controllers
             Kullanicilar KulModel = new Kullanicilar();
             KulModel.SeciliTurnuva = model.Id;
             KulModel.Id = m.Id;
+
+
+
 
             MvcDbHelper.Repository.Update(Queries.Kullanicilar.SecTurUpdate, KulModel);
 
