@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using VeritabaniKatmani;
 using TurnuvaWebUygulama.Helper;
 using VeritabaniKatmani.SqlQuery;
+using OperasyonKatmani.GrupOperasyon;
 
 namespace TurnuvaWebUygulama.Controllers
 {
@@ -22,8 +23,9 @@ namespace TurnuvaWebUygulama.Controllers
             model.GolKralligi = MvcDbHelper.Repository.GetById<GolKralligi>(Queries.GenelBilgiler.golkralligi, new { Id = Id }).ToList();
             model.Centilmenlik = MvcDbHelper.Repository.GetById<Centilmenlik>(Queries.GenelBilgiler.centilmenlik, new { Id = Id }).ToList();
 
-            return View(model);
+           // PuanHesapla.Hesapla(m.SeciliTurnuva);
 
+            return View(model);
         }
 
         public ActionResult Test()

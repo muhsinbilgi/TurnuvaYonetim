@@ -41,8 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrupOperasyon\GrupOperasyon.cs" />
+    <Compile Include="GrupOperasyon\PuanHesapla.cs" />
+    <Compile Include="Helper\MvcDbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VeritabaniKatmani\VeritabaniKatmani.csproj">
+      <Project>{1cb895ce-8fc9-47fa-9070-b1f6ac2c2614}</Project>
+      <Name>VeritabaniKatmani</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

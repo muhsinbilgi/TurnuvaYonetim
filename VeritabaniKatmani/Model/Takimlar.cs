@@ -18,6 +18,7 @@ namespace VeritabaniKatmani
         public int TurnuvaId { get; set; }
         public string KategoriAdi { get; set; }
 
+        public bool Secim { get; set; }
 
         public AbstractDapperRepository Repository { get; set; }
 

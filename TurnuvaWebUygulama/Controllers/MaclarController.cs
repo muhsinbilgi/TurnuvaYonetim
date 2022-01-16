@@ -27,19 +27,7 @@ namespace TurnuvaWebUygulama.Controllers
             return View(model);
         }
 
-        public ActionResult Gruplar()
-        {
-            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
-            
-            GrupListele model = new GrupListele();
-            
-            model.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
-            model.Gruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
-       
-
-            return View(model);
-        }
-
+ 
 
         public ActionResult Detay(int Id)
         {

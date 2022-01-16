@@ -99,6 +99,7 @@
     <Compile Include="Model\GorevTuru.cs" />
     <Compile Include="Model\GrupAdlari.cs" />
     <Compile Include="Model\Gruplar.cs" />
+    <Compile Include="Model\GrupTakim.cs" />
     <Compile Include="Model\GrupListele.cs" />
     <Compile Include="Model\GolKralligi.cs" />
     <Compile Include="Model\Istatistikler.cs" />

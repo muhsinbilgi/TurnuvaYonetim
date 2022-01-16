@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "GrupEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model VeritabaniKatmani.GrupTakim
+
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Grupları Oluştur</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="">
+    <div class="card">
+
+        <div class="card-body">
+            <div id="pay-invoice">
+                <div class="card-body">
+
+                    <hr>
+
+                    @using (Html.BeginForm("Ekle", "Gruplar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        <div class="form-group has-success">
+
+                            <div class="form-group">
+                                <label for="GrupId" class="control-label mb-1">Grup Adı</label>
+                                @Html.TextBoxFor(m => m.Gruplar.GrupId, new { @id = "cc-name", @class = "form-control" })
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="Takımlar" class="control-label mb-1">Takımları Seç</label>
+                                <table cellpadding="8" border="0">
+                                    @for (int i = 0; i < Model.Takimlar.Count; i++)
+                                    {
+                                        if (i % 4 == 0)
+                                        {
+                                            @:
+                                            <tr></tr>
+
+                                        }
+                                        <td>
+                                            @Html.CheckBoxFor(x => x.Takimlar[i].Secim, new { @class = "custom-checkbox" })
+                                            <label>@Model.Takimlar[i].Adi</label>
+                                            @Html.HiddenFor(x => x.Takimlar[i].Id)
+                                            @Html.HiddenFor(x => x.Takimlar[i].Adi)
+                                        </td>
+
+                                    }
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <hr />
+                        </div>
+
+                        <div>
+                            @if (@ViewBag.Basari == 1)
+                            {
+                                <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                    <span class="badge badge-pill badge-success">Başarılı</span> Grup Kaydedildi.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            }
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fa fa-dot-circle-o"></i> Kaydet
+                            </button>
+                            @Html.ActionLink("Gruplar", "Index", "Gruplar", null, new { @class = "btn btn-primary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@foreach (var Grup in Model.GrupAdlari)
+{
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>@Grup.GrupId Grup</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">TakimAdi</th>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model.GrupListe)
+                    {
+                        if (Grup.GrupId == item.GrupId)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.TakimAdi)</td>
+                                </tr>
+
+                            </tbody>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+}

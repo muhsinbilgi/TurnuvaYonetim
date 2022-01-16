@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FiksturMotoruController.cs" />
     <Compile Include="Controllers\GorevlilerController.cs" />
+    <Compile Include="Controllers\GruplarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -2882,11 +2883,12 @@
     <Content Include="Views\Kullanicilar\Index.cshtml" />
     <Content Include="Views\Kullanicilar\Ekle.cshtml" />
     <Content Include="Views\Kullanicilar\Duzenle.cshtml" />
-    <Content Include="Views\Maclar\Gruplar.cshtml" />
+    <Content Include="Views\Gruplar\Index.cshtml" />
     <Content Include="Views\FiksturMotoru\Index.cshtml" />
     <Content Include="Views\Maclar\Detay.cshtml" />
     <Content Include="Views\Maclar\DetayEkle.cshtml" />
     <Content Include="Views\Maclar\Ekle.cshtml" />
+    <Content Include="Views\Gruplar\Ekle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

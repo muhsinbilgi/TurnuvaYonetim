@@ -366,17 +366,58 @@ namespace VeritabaniKatmani.SqlQuery
 
 
             public static string Delete => "delete from gruplar where Id = @Id";
+
+
+            public static string Update => @"update `gruplar` set
+                                         `OynadigiMac` = @OynadigiMac,
+                                          `Galibiyet`= @Galibiyet,
+                                          `Maglubiyet`= @Maglubiyet,
+                                          `Beraberlik`= @Beraberlik,
+                                          `AttigiGol`= @AttigiGol,
+                                          `YedigiGol`= @YedigiGol,
+                                          `Puan`= @Puan
+                                           where Id = @Id";
+
             public static string GetAll => @"select
                                            t.Adi as TakimAdi,
                                            g.*
                                            from gruplar g
                                            inner join takimlar t on t.id = g.TakimId
-                                           where g.TurnuvaId = @Id";
+                                           where g.TurnuvaId = @Id
+                                           order by g.puan desc";
             public static string GetbyId => "select * from gruplar where Id = @Id";
 
             public static string GetMaxGrup => "select COUNT(*) as MaxGrup from (select * from gruplar group by GrupId) as grp where TurnuvaId = @TurnuvaId";
 
-         
+            public static string GetPuanDurumu => @"select
+                                                  gr.Id,
+                                                  gr.GrupId,
+                                                  tk.Id as TakimId,
+                                                  gr.TurnuvaId,
+                                                  (select COUNT(*) from maclar m1 where m1.BirinciTakimId = tk.Id and m1.BirinciTakimSkor is not null) + 
+                                                  (select COUNT(*) from maclar m2 where m2.IkinciTakimId = tk.Id and m2.IkinciTakimSkor is not null) as OynadigiMac,
+                                                  (select COALESCE(sum(if(m1.BirinciTakimSkor > m1.IkinciTakimSkor,1,0)),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
+                                                  (select COALESCE(sum(if(m2.IkinciTakimSkor > m2.BirinciTakimSkor,1,0)),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as Galibiyet,
+                                                  (select COALESCE(sum(if(m1.BirinciTakimSkor < m1.IkinciTakimSkor,1,0)),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
+                                                  (select COALESCE(sum(if(m2.IkinciTakimSkor < m2.BirinciTakimSkor,1,0)),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as Maglubiyet,
+                                                  (select COALESCE(sum(if(m1.BirinciTakimSkor = m1.IkinciTakimSkor,1,0)),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
+                                                  (select COALESCE(sum(if(m2.IkinciTakimSkor = m2.BirinciTakimSkor,1,0)),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as Beraberlik,
+                                                  (select COALESCE(sum(m1.BirinciTakimSkor),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
+                                                  (select COALESCE(sum(m2.IkinciTakimSkor),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as AttigiGol,
+                                                  (select COALESCE(sum(m1.IkinciTakimSkor),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
+                                                  (select COALESCE(sum(m2.BirinciTakimSkor),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as YedigiGol,
+                                                  COALESCE((select 
+                                                  (case  when m1.BirinciTakimSkor > m1.IkinciTakimSkor then 3 when m1.BirinciTakimSkor = m1.IkinciTakimSkor then 1 when m1.BirinciTakimSkor < m1.IkinciTakimSkor then 0 else 0 end)
+                                                  from maclar m1 where m1.BirinciTakimId = tk.Id),0) +
+                                                  COALESCE((select 
+                                                  (case  when m2.IkinciTakimSkor > m2.BirinciTakimSkor then 3 when m2.IkinciTakimSkor = m2.BirinciTakimSkor then 1 when m2.IkinciTakimSkor < m2.BirinciTakimSkor then 0 else 0 end)
+                                                  from maclar m2 where m2.IkinciTakimId = tk.Id),0) as Puan,
+                                                  tk.Adi as TakimAdi
+                                                  from takimlar tk
+                                                  left join gruplar gr on gr.TakimId = tk.Id
+                                                  where tk.TurnuvaId = @TurnuvaId";
+
+
         }
 
         public static class GrupAdlari
@@ -495,7 +536,8 @@ where m.Id = @Id";
                                          left join sporcular s on s.id = md.SporcuId
                                          left join takimlar tk on tk.Id = s.TakimId
                                          where md.DetayId = 1 and s.TurnuvaId = @Id
-                                         GROUP BY md.SporcuId,md.DetayId";
+                                         GROUP BY md.SporcuId,md.DetayId
+                                         order by GolSayisi desc";
             public static string centilmenlik => @"select
                                          tk.Adi as TakimAdi,
                                          (SELECT COUNT(*) from macdetay md where md.TakimId = tk.Id and md.DetayId = 2) as SarikartSayisi,

@@ -6,11 +6,10 @@
 
 @model VeritabaniKatmani.GrupListele
 
-
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
-            <div class="page-item">
+            <div class="page-title">
 
             </div>
         </div>
@@ -19,6 +18,10 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
+                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                    {
+                        <li class="active"> @Html.ActionLink("Grup Oluştur", "Ekle", "Gruplar", new { @class = "btn btn-success btn-lg" })</li>
+                    }
                 </ol>
             </div>
         </div>
