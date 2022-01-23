@@ -97,20 +97,39 @@
 
 
 @foreach (var Grup in Model.GrupAdlari)
-{
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-header">
-                <h4>@Grup.GrupId Grup</h4>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">TakimAdi</th>
-                        </tr>
-                    </thead>
 
+{
+
+
+  <div class="col-lg-3">
+  <div class="card">
+      <div class="card-header">
+          <table class="table table-striped">
+              <tr>
+                  <td valign="middle"> <h3>Grup @Grup.GrupId</h3></td>
+                  <td align="right">
+
+                      @using (Html.BeginForm("Sil", "Gruplar", new { GrupId = Grup.GrupId }, FormMethod.Post))
+                      {
+
+                          if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("T"))
+                          {
+                              <button class="btn btn-danger btn-sm">Sil</button>
+                          }
+                      }
+
+
+
+                  </td>
+              </tr>
+             </table>
+
+            
+
+      </div>
+       <div class="card-body">
+                <table class="table table-striped">
+         
 
                     @foreach (var item in Model.GrupListe)
                     {
@@ -131,4 +150,7 @@
             </div>
         </div>
     </div>
+
+
+
 }

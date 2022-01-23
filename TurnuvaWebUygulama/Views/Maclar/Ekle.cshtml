@@ -5,6 +5,36 @@
 }
 @model VeritabaniKatmani.Maclar
 
+
+    <script>
+        $(function () {
+       
+        $('#TakimId1').change(function () {
+            var id = $('#TakimId1').val();
+            $.ajax({
+                url: '/Maclar/GrupTakim',
+                data: { Id : id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#TakimId2').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#TakimId2').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+
+
+
+
+
+
+
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
@@ -37,11 +67,11 @@
                     </div>
                     <div class="form-group">
                         <label for="BirinciTakimAdi" class="control-label mb-1">Birinci Takım Seç</label>
-                        @Html.DropDownListFor(m => m.BirinciTakimId, (List<SelectListItem>)ViewBag.tkm1, new { @id = "select", @class = "form-control" })
+                        @Html.DropDownListFor(m => m.BirinciTakimId, (List<SelectListItem>)ViewBag.tkm1, new { @id = "TakimId1", @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label for="IkinciTakimAdi" class="control-label mb-1">İkinci Takım Seç</label>
-                        @Html.DropDownListFor(m => m.IkinciTakimId, (List<SelectListItem>)ViewBag.tkm2, new { @id = "select", @class = "form-control" })
+                        @Html.DropDownListFor(m => m.IkinciTakimId, (List<SelectListItem>)ViewBag.tkm2, new { @id = "TakimId2", @class = "form-control" })
                     </div>
                 
                     <div class="form-group">

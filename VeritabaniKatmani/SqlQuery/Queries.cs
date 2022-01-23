@@ -160,6 +160,24 @@ namespace VeritabaniKatmani.SqlQuery
 
             /* Takım Sorumlusu için : */
             public static string GetbyT => "select * from takimlar t where t.Id = @Id";
+
+            /*Bir takımın grubundaki diğer takımları getirmek için */
+            public static string GetbyGT => @"select t.* from takimlar t
+                                              left join gruplar g on g.TakimId = t.Id
+                                              where g.GrupId in (select g.GrupId from gruplar g where g.TakimId =@TakimId) and g.TakimId != @TakimId and g.TurnuvaId = @TurnuvaId
+                                              union 
+                                              select 
+                                              0 as Id,
+                                              'Bay' as Adi,
+                                              1 as kategoriId,
+                                              null as Logo,
+                                              null as Konum,
+                                              null as TurnuvaId";
+
+            /* Grupa dahil olmayan takımları getirmek için */
+            public static string GetbyGrp => @"select t.* from takimlar t 
+                                             left join gruplar g on g.TakimId = t.Id and t.TurnuvaId = g.TurnuvaId
+                                             where g.GrupId is null and t.TurnuvaId = @TurnuvaId";
         }
 
 
@@ -319,7 +337,9 @@ namespace VeritabaniKatmani.SqlQuery
                                               from maclar m
                                               inner join Hafta h on h.Id = m.Hafta
                                               inner join takimlar t1 on t1.Id = m.BirinciTakimId
-                                              inner join takimlar t2 on t2.Id = m.IkinciTakimId";
+                                              inner join takimlar t2 on t2.Id = m.IkinciTakimId
+                                              where m.TurnuvaId = @TurnuvaId";
+                          
 
          
             public static string GetbyId => "select * from maclar where Id = @Id";
@@ -365,7 +385,7 @@ namespace VeritabaniKatmani.SqlQuery
                                                                  VALUES(@GrupId,@TakimId,@TurnuvaId)";
 
 
-            public static string Delete => "delete from gruplar where Id = @Id";
+            public static string Delete => "delete from gruplar where GrupId = @GrupId";
 
 
             public static string Update => @"update `gruplar` set
@@ -407,10 +427,10 @@ namespace VeritabaniKatmani.SqlQuery
                                                   (select COALESCE(sum(m1.IkinciTakimSkor),0) from maclar m1 where m1.BirinciTakimId = tk.Id) +
                                                   (select COALESCE(sum(m2.BirinciTakimSkor),0) from maclar m2 where m2.IkinciTakimId = tk.Id) as YedigiGol,
                                                   COALESCE((select 
-                                                  (case  when m1.BirinciTakimSkor > m1.IkinciTakimSkor then 3 when m1.BirinciTakimSkor = m1.IkinciTakimSkor then 1 when m1.BirinciTakimSkor < m1.IkinciTakimSkor then 0 else 0 end)
+                                                  SUM(case  when m1.BirinciTakimSkor > m1.IkinciTakimSkor then 3 when m1.BirinciTakimSkor = m1.IkinciTakimSkor then 1 when m1.BirinciTakimSkor < m1.IkinciTakimSkor then 0 else 0 end)
                                                   from maclar m1 where m1.BirinciTakimId = tk.Id),0) +
                                                   COALESCE((select 
-                                                  (case  when m2.IkinciTakimSkor > m2.BirinciTakimSkor then 3 when m2.IkinciTakimSkor = m2.BirinciTakimSkor then 1 when m2.IkinciTakimSkor < m2.BirinciTakimSkor then 0 else 0 end)
+                                                  SUM(case  when m2.IkinciTakimSkor > m2.BirinciTakimSkor then 3 when m2.IkinciTakimSkor = m2.BirinciTakimSkor then 1 when m2.IkinciTakimSkor < m2.BirinciTakimSkor then 0 else 0 end)
                                                   from maclar m2 where m2.IkinciTakimId = tk.Id),0) as Puan,
                                                   tk.Adi as TakimAdi
                                                   from takimlar tk

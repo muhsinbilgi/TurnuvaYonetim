@@ -21,7 +21,7 @@ namespace TurnuvaWebUygulama.Controllers
             MacListele model = new MacListele();
 
             model.MacHaftalari = MvcDbHelper.Repository.GetById<MacHaftalari>(Queries.MacHaftalari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
-            model.Maclar = MvcDbHelper.Repository.GetById<Maclar>(Queries.Maclar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
+            model.Maclar = MvcDbHelper.Repository.GetById<Maclar>(Queries.Maclar.GetAll, new { TurnuvaId = m.SeciliTurnuva }).ToList();
 
 
             return View(model);
@@ -52,13 +52,19 @@ namespace TurnuvaWebUygulama.Controllers
                                         {
                                             Text = i.Adi,
                                             Value = i.Id.ToString()
-                                        }).ToList();
+                                        }
+                                        ).ToList();
+                      
+            tkm.Add(new SelectListItem() { Text = "Önce takımı Seç", Value = "0" });
+
+            tkm.OrderByDescending(c => c.Value);
 
 
             List<SelectListItem> spr = new List<SelectListItem>();
 
             spr.Add(new SelectListItem() { Text = "Önce Takım Seç", Value = "0" });
 
+            spr.OrderByDescending(c => c.Value);
 
             List<SelectListItem> dty = (from i in MvcDbHelper.Repository.GetAll<Detay>(Queries.Detay.GetAll).ToList()
                                         select new SelectListItem
@@ -85,14 +91,14 @@ namespace TurnuvaWebUygulama.Controllers
                                             Text = i.Adi,
                                             Value = i.Id.ToString()
                                         }).ToList();
-
-
+            tkm.Add(new SelectListItem() { Text = "Önce Takım Seç", Value = "0" });
+            tkm.OrderByDescending(c => c.Value);
 
             List<SelectListItem> spr = new List<SelectListItem>();
 
             spr.Add(new SelectListItem() { Text = "Önce Takım Seç", Value = "0" });
 
-
+            spr.OrderByDescending(c => c.Value);
             List<SelectListItem> dty = (from i in MvcDbHelper.Repository.GetAll<Detay>(Queries.Detay.GetAll).ToList()
                                         select new SelectListItem
                                         {
@@ -119,8 +125,8 @@ namespace TurnuvaWebUygulama.Controllers
                 MvcDbHelper.Repository.Update(Queries.Maclar.SkorUpdate, MacSkor);
             }
 
-
-
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            Getir.PuanHesapla(m.SeciliTurnuva);
 
 
 
@@ -151,10 +157,29 @@ namespace TurnuvaWebUygulama.Controllers
         }
 
 
+        public JsonResult GrupTakim(int Id)
+        {
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+
+            var Takimlar = (from x in MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyGT, new { TakimId = Id, TurnuvaId = m.SeciliTurnuva }).ToList()
+                             select new
+                             {
+                                 Text = x.Adi,
+                                 Value = x.Id.ToString()
+
+                             }).ToList();
+          
+
+            return Json(Takimlar, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult Sil(int Id)
         {
             Maclar model = new Maclar() { Id = Id };
             MvcDbHelper.Repository.Delete<Maclar>(Queries.Maclar.Delete, model);
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            Getir.PuanHesapla(m.SeciliTurnuva);
             return RedirectToAction("Index");
         }
 
@@ -186,7 +211,8 @@ namespace TurnuvaWebUygulama.Controllers
                 MvcDbHelper.Repository.Update(Queries.Maclar.SkorUpdate, MacSkor);
             }
 
-
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            Getir.PuanHesapla(m.SeciliTurnuva);
 
 
 
@@ -197,19 +223,21 @@ namespace TurnuvaWebUygulama.Controllers
 
         public ActionResult Ekle()
         {
-            List<SelectListItem> tkm1 = (from i in MvcDbHelper.Repository.GetAll<Takimlar>(Queries.Takimlar.GetAll).ToList()
-                                             select new SelectListItem
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+           
+
+            List<SelectListItem> tkm1 = (from i in MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyY, new { TurnuvaId = m.SeciliTurnuva }).ToList()
+            select new SelectListItem
                                              {
                                                  Text = i.Adi,
                                                  Value = i.Id.ToString()
                                              }).ToList();
 
-            List<SelectListItem> tkm2 = (from i in MvcDbHelper.Repository.GetAll<Takimlar>(Queries.Takimlar.GetAll).ToList()
-                                         select new SelectListItem
-                                         {
-                                             Text = i.Adi,
-                                             Value = i.Id.ToString()
-                                         }).ToList();
+            tkm1.Add(new SelectListItem() { Text = "Önce ilk takımı Seç", Value = "0" });
+            tkm1.OrderByDescending(c => c.Value);
+
+            
+            
 
             List<SelectListItem> hft = (from i in MvcDbHelper.Repository.GetAll<Hafta>(Queries.Hafta.GetAll).ToList()
                                         select new SelectListItem
@@ -218,9 +246,10 @@ namespace TurnuvaWebUygulama.Controllers
                                             Value = i.Id.ToString()
                                         }).ToList();
 
-
+            List<SelectListItem> tkm2 = new List<SelectListItem>();
+            tkm2.Add(new SelectListItem() { Text = "Önce ilk takımı Seç", Value = "0" });
             tkm2.Add(new SelectListItem() { Text = "Bay", Value = "0" });
-
+            tkm2.OrderByDescending(c => c.Value);
 
             ViewBag.tkm1 = tkm1;
             ViewBag.tkm2 = tkm2;
@@ -233,20 +262,22 @@ namespace TurnuvaWebUygulama.Controllers
         [HttpPost]
         public ActionResult Ekle(Maclar model, HttpPostedFileBase file)
         {
-            List<SelectListItem> tkm1 = (from i in MvcDbHelper.Repository.GetAll<Takimlar>(Queries.Takimlar.GetAll).ToList()
-                                        select new SelectListItem
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            List<SelectListItem> tkm1 = (from i in MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyY, new { TurnuvaId = m.SeciliTurnuva }).ToList()
+                                         select new SelectListItem
                                         {
                                             Text = i.Adi,
                                             Value = i.Id.ToString()
                                         }).ToList();
 
-           
-            List<SelectListItem> tkm2 = (from i in MvcDbHelper.Repository.GetAll<Takimlar>(Queries.Takimlar.GetAll).ToList()
-                                         select new SelectListItem
-                                         {
-                                             Text = i.Adi,
-                                             Value = i.Id.ToString()
-                                         }).ToList();
+            tkm1.Add(new SelectListItem() { Text = "Önce ilk takımı Seç", Value = "0" });
+            tkm1.OrderByDescending(c => c.Value);
+            List<SelectListItem> tkm2 = new List<SelectListItem>();
+
+            tkm2.Add(new SelectListItem() { Text = "Önce ilk takımı Seç", Value = "0" });
+            tkm2.Add(new SelectListItem() { Text = "Bay", Value = "0" });
+            tkm2.OrderByDescending(c => c.Value);
+
 
             List<SelectListItem> hft = (from i in MvcDbHelper.Repository.GetAll<Hafta>(Queries.Hafta.GetAll).ToList()
                                         select new SelectListItem
@@ -255,7 +286,7 @@ namespace TurnuvaWebUygulama.Controllers
                                             Value = i.Id.ToString()
                                         }).ToList();
 
-            tkm2.Add(new SelectListItem() { Text = "Bay", Value = "0" });
+           
 
 
          
@@ -265,7 +296,7 @@ namespace TurnuvaWebUygulama.Controllers
             }
 
 
-            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+          
             model.TurnuvaId = m.SeciliTurnuva;
             MvcDbHelper.Repository.Insert(Queries.Maclar.Insert, model);
             ViewBag.Basari = 1;

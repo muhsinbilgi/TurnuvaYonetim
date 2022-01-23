@@ -33,7 +33,7 @@ namespace TurnuvaWebUygulama.Controllers
         {
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
             GrupTakim model = new GrupTakim();
-            model.Takimlar = MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyY, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+            model.Takimlar = Getir.GrupsuzTakimGetir(m.SeciliTurnuva);
             model.GrupListe = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
             model.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
 
@@ -61,7 +61,7 @@ namespace TurnuvaWebUygulama.Controllers
             }
 
             
-            model.Takimlar = MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyY, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+            model.Takimlar =  Getir.GrupsuzTakimGetir(m.SeciliTurnuva);
             model.GrupListe = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
             model.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
 
@@ -69,7 +69,12 @@ namespace TurnuvaWebUygulama.Controllers
             return View(model);
         }
 
-
+        public ActionResult Sil(String GrupId)
+        {
+            Gruplar model = new Gruplar() { GrupId = GrupId};
+            MvcDbHelper.Repository.Delete<Gruplar>(Queries.Gruplar.Delete, model);
+            return RedirectToAction("Ekle");
+        }
 
 
 

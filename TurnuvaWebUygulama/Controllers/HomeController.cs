@@ -23,7 +23,7 @@ namespace TurnuvaWebUygulama.Controllers
             model.GolKralligi = MvcDbHelper.Repository.GetById<GolKralligi>(Queries.GenelBilgiler.golkralligi, new { Id = Id }).ToList();
             model.Centilmenlik = MvcDbHelper.Repository.GetById<Centilmenlik>(Queries.GenelBilgiler.centilmenlik, new { Id = Id }).ToList();
 
-           // PuanHesapla.Hesapla(m.SeciliTurnuva);
+            
 
             return View(model);
         }
