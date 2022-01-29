@@ -95,6 +95,7 @@
     <Compile Include="Model\Evrak.cs" />
     <Compile Include="Model\EvrakTuru.cs" />
     <Compile Include="Model\Centilmenlik.cs" />
+    <Compile Include="Model\FiksturMotoru.cs" />
     <Compile Include="Model\Gorevliler.cs" />
     <Compile Include="Model\GorevTuru.cs" />
     <Compile Include="Model\GrupAdlari.cs" />

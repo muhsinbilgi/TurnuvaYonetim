@@ -70,7 +70,23 @@ namespace TurnuvaWebUygulama.Controllers
 
 
             }
+
+
             MvcDbHelper.Repository.Insert(Queries.Turnuva.Insert, model);
+
+            var MaxId = MvcDbHelper.Repository.GetAll<Turnuva>(Queries.Turnuva.GetByMaxId).FirstOrDefault();
+
+            Kullanicilar Kul = new Kullanicilar();
+            Kul.Id = model.YoneticiKullaniciId;
+            Kul.SeciliTurnuva = MaxId.Id;
+
+            KullaniciTurnuva KulTur = new KullaniciTurnuva();
+            KulTur.TurnuvaId = MaxId.Id;
+            KulTur.KullaniciId = model.YoneticiKullaniciId;
+
+            MvcDbHelper.Repository.Update(Queries.Kullanicilar.SecTurUpdate, Kul);
+            MvcDbHelper.Repository.Insert(Queries.KullaniciTurnuva.Insert, KulTur);
+
             ViewBag.Basari = 1;
             ViewBag.dgr = degerler;
             ViewBag.Yon = Yon;

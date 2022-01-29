@@ -24,6 +24,8 @@ namespace VeritabaniKatmani.SqlQuery
                                           `Resim` = @Resim
                                           where Id = @Id";
 
+         
+
             public static string SecTurUpdate => @"update `kullanicilar` set
                                          `SeciliTurnuva` = @SeciliTurnuva
                                           where Id = @Id";
@@ -128,6 +130,12 @@ namespace VeritabaniKatmani.SqlQuery
             public static string GetbyTur => @"select t.id,t.Adi from turnuva t
                                                inner join kullaniciturnuva k on k.TurnuvaId = t.Id
                                                where k.KullaniciId = @Id";
+            public static string GetByMaxId => "select max(Id) as Id from turnuva";
+
+            public static string GetByTakimSayisi => @"select COUNT(*) as TakimSayisi from turnuva t 
+                                                       inner join takimlar tk on tk.TurnuvaId = t.Id
+                                                       where t.Id = @Id";
+
         }                                                                        
 
         public static class Takimlar
@@ -178,6 +186,8 @@ namespace VeritabaniKatmani.SqlQuery
             public static string GetbyGrp => @"select t.* from takimlar t 
                                              left join gruplar g on g.TakimId = t.Id and t.TurnuvaId = g.TurnuvaId
                                              where g.GrupId is null and t.TurnuvaId = @TurnuvaId";
+          
+
         }
 
 
@@ -437,6 +447,7 @@ namespace VeritabaniKatmani.SqlQuery
                                                   left join gruplar gr on gr.TakimId = tk.Id
                                                   where tk.TurnuvaId = @TurnuvaId";
 
+            public static string GetByGrupListesi => "select * from gruplar where TurnuvaId =  @TurnuvaId";
 
         }
 

@@ -11,7 +11,7 @@ namespace VeritabaniKatmani
     public class GrupListele
     {
 
-
+        public FiksturMotoru FiksturMotoru { get; set; }
         public List<GrupAdlari> GrupAdlari { get; set; }
 
         public List<Gruplar> Gruplar { get; set; }

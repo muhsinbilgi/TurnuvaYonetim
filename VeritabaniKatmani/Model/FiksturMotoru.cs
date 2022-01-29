@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace VeritabaniKatmani
 {
-    public class Turnuva : IDbModel
+    public class FiksturMotoru : IDbModel
     {
         public int Id { get; set; }
-        public string Adi { get; set; }
-        public int KategoriId { get; set; }
-        public int YoneticiKullaniciId { get; set; }
-        public string Logo { get; set; }
-        public string KategoriAdi { get; set; }
-        public string YoneticiAdi { get; set; }
-        public int TakimSayisi { get; set; }
-
+        public int TurnuvaTuru { get; set; }
+        public int ElemeSistemi { get; set; }
+        public int GrupSayisi { get; set; }
+        public int GrupAdiTuru { get; set; }
+        public bool MacSistemi { get; set; }
+        public int TurnuvaId {get; set;}
 
 
         public AbstractDapperRepository Repository { get; set; }
@@ -34,3 +32,5 @@ namespace VeritabaniKatmani
         }
     }
 }
+
+
