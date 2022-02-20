@@ -66,18 +66,21 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.Tarih)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Saat)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.BirinciTakimSkor)</td>
-                                    <td>-</td>
-                                    <td>@Html.DisplayFor(modelItem => item.IkinciTakimSkor)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.IkinciTakimAdi)</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { <b>Bay</b> } else { @Html.DisplayFor(modelItem => item.Tarih)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { <b>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</b> } else {@Html.DisplayFor(modelItem => item.Saat)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.BirinciTakimAdi)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.BirinciTakimSkor)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {<p>-</p> }</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.IkinciTakimSkor)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.IkinciTakimAdi)}</td>
                                     <td>
-                                        @Html.ActionLink("Maç Detayı", "Detay", "Maclar", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
-                                        @if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
+                                        @if (item.IkinciTakimAdi == null) { }
+                                        else
+                                        {@Html.ActionLink("Maç Detayı", "Detay", "Maclar", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+                                        if (User.IsInRole("A") || User.IsInRole("Y") || User.IsInRole("H"))
                                         {
                                             @Html.ActionLink("Detay Ekle", "DetayEkle", "Maclar", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
+                                        }
                                         }
                                     </td>
                                     @if (User.IsInRole("A") || User.IsInRole("Y"))

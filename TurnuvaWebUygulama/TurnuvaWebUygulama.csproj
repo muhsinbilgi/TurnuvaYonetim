@@ -2889,6 +2889,7 @@
     <Content Include="Views\Maclar\DetayEkle.cshtml" />
     <Content Include="Views\Maclar\Ekle.cshtml" />
     <Content Include="Views\Gruplar\Ekle.cshtml" />
+    <Content Include="Views\FiksturMotoru\Eslesmeler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,13 +8,17 @@ using System.Threading.Tasks;
 
 namespace VeritabaniKatmani
 {
-    public class GrupAdlari : IDbModel
+    public class EslesmeMotoru : IDbModel
     {
         public int Id { get; set; }
-        public string GrupId { get; set; }
+        public DateTime TurnuvaBaslamaTarihi { get; set; }
+        public DateTime IlkMacSaati { get; set; }
+        public int GundeKacMac { get; set; }
+        public int TurnuvaId {get; set;}
 
-        public int GrupMacSayisi { get; set; }
-
+        public int GrupTakimSayisi { get; set; }
+        public int HaftaSayisi { get; set; }
+        public int ToplamMacSayisi { get; set; }
 
         public AbstractDapperRepository Repository { get; set; }
 
@@ -29,3 +33,5 @@ namespace VeritabaniKatmani
         }
     }
 }
+
+

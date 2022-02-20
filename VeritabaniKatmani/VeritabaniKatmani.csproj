@@ -95,6 +95,7 @@
     <Compile Include="Model\Evrak.cs" />
     <Compile Include="Model\EvrakTuru.cs" />
     <Compile Include="Model\Centilmenlik.cs" />
+    <Compile Include="Model\EslesmeMotoru.cs" />
     <Compile Include="Model\FiksturMotoru.cs" />
     <Compile Include="Model\Gorevliler.cs" />
     <Compile Include="Model\GorevTuru.cs" />
@@ -103,6 +104,9 @@
     <Compile Include="Model\GrupTakim.cs" />
     <Compile Include="Model\GrupListele.cs" />
     <Compile Include="Model\GolKralligi.cs" />
+    <Compile Include="Model\Eslesmeler.cs" />
+    <Compile Include="Model\Sayi.cs" />
+    <Compile Include="Model\Gunler.cs" />
     <Compile Include="Model\Istatistikler.cs" />
     <Compile Include="Model\Hafta.cs" />
     <Compile Include="Model\Kategori.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Model\MacDetayTakimSporcu.cs" />
     <Compile Include="Model\MacGorevlileri.cs" />
     <Compile Include="Model\MacHaftalari.cs" />
+    <Compile Include="Model\MacSablonu.cs" />
     <Compile Include="Model\Maclar.cs" />
     <Compile Include="Model\MacListele.cs" />
     <Compile Include="Model\MacTakimDetay.cs" />
@@ -121,6 +126,7 @@
     <Compile Include="Model\SporcuEvrak.cs" />
     <Compile Include="Model\Sporcular.cs" />
     <Compile Include="Model\Statu.cs" />
+    <Compile Include="Model\GrupTakimEslesme.cs" />
     <Compile Include="Model\Takimlar.cs" />
     <Compile Include="Model\TakimSporcu.cs" />
     <Compile Include="Model\Turnuva.cs" />

@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrupOperasyon\Getir.cs" />
+    <Compile Include="FiksturOperasyon\Eslesme.cs" />
+    <Compile Include="FiksturOperasyon\Grup.cs" />
     <Compile Include="Helper\MvcDbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

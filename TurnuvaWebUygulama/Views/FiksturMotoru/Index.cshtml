@@ -4,8 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <script>
+
+
     $(document).ready(function () {
         $('#GrupSayisi').hide();
         $('#GrupAdiTuru').hide();
@@ -15,6 +16,8 @@
         $('#GrupAdiTuruLbl').hide();
         $('#MacSistemiTekLbl').hide();
         $('#MacSistemiCiftLbl').hide();
+
+
         $('#FiksturForm select[id="TurnuvaTuru"]').change(function () {
             $('#FiksturForm select[id="TurnuvaTuru"]').val() == '1' ? $('#ElemeSistemi').show() : $('#ElemeSistemi').hide()
         });
@@ -45,6 +48,7 @@
         $('#FiksturForm select[id="TurnuvaTuru"]').change(function () {
             $('#FiksturForm select[id="TurnuvaTuru"]').val() == '3' ? $('#MacSistemiCiftLbl').show() : $('#MacSistemiCiftLbl').hide()
         });
+
     });
 </script>
 
@@ -60,112 +64,256 @@
 
 </div>
 
-<div class="col-sm-4">
-    <div class="card">
 
-        <div class="card-body">
-            <div id="pay-invoice">
-                <div class="card-body">
-
-                    <hr>
+@if (ViewBag.ManuelGrup == true)
+{
+    <div class="col-lg-12">
 
 
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Grup Bulundu.</span> Var olan gruplar ile devam etmek için Kaydet Devam Et butonuna basın. Grupları sistemin oluşturmasını istiyorsanız Gruplar sayfasından var olan grupları silin.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    if (ViewBag.Basari == null)
+    {
+        <div class="col-sm-3">
+            <div class="card">
+                <div id="pay-invoice">
+                    <div class="card-body">
 
-                    @using (Html.BeginForm("Index", "FiksturMotoru", FormMethod.Post, new { @id = "FiksturForm", @class = "FiksturForm" }))
-                    {
+                        <hr>
 
-                        <div class="form-group has-success">
+
+
+                        @using (Html.BeginForm("Index", "FiksturMotoru", FormMethod.Post, new { @id = "FiksturForm", @class = "FiksturForm" }))
+                        {
 
                             <div class="form-group has-success">
-                                <label for="TurnuvaTuru" class="control-label mb-1">Turnuva Türü</label>
-                                @Html.DropDownListFor(m => m.FiksturMotoru.TurnuvaTuru, (List<SelectListItem>)ViewBag.TurnuvaTuru, new { @id = "TurnuvaTuru", @class = "form-control" })
 
-                            </div>
+                                <div class="form-group has-success">
+                                    <label for="TurnuvaTuru" class="control-label mb-1">Turnuva Türü</label>
+                                    @Html.DropDownListFor(m => m.FiksturMotoru.TurnuvaTuru, (List<SelectListItem>)ViewBag.TurnuvaTuru, new { @id = "TurnuvaTuru", @class = "form-control" })
 
-                            <div class="form-group has-success">
-                                <label id="ElemeSistemiLbl" for="ElemeSistemi" class="control-label mb-1">Eleme Sistemi</label>
-                                @Html.DropDownListFor(m => m.FiksturMotoru.ElemeSistemi, (List<SelectListItem>)ViewBag.ElemeSistemi, new { @id = "ElemeSistemi", @class = "form-control" })
+                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label id="GrupSayisiLbl" for="Grup Sayısı" class="control-label mb-1">Grup Sayısı</label>
-                                @Html.TextBoxFor(m => m.FiksturMotoru.GrupSayisi, new { @id = "GrupSayisi", @class = "form-control" })
-                            </div>
-                            <div class="form-group has-success">
-                                <label id="GrupAdiTuruLbl" for="GrupAdiTuru" class="control-label mb-1">Grup Adi Turu</label>
-                                @Html.DropDownListFor(m => m.FiksturMotoru.GrupAdiTuru, (List<SelectListItem>)ViewBag.GrupAdiTuru, new { @id = "GrupAdiTuru", @class = "form-control" })
+                                <div class="form-group has-success">
+                                    <label id="ElemeSistemiLbl" for="ElemeSistemi" class="control-label mb-1">Eleme Sistemi</label>
+                                    @Html.DropDownListFor(m => m.FiksturMotoru.ElemeSistemi, (List<SelectListItem>)ViewBag.ElemeSistemi, new { @id = "ElemeSistemi", @class = "form-control" })
 
-                            </div>
-                            <div class="form-group">
-                                @Html.RadioButtonFor(m => m.FiksturMotoru.MacSistemi, "T", new { @id = "MacSistemiTek" }) @Html.Label("Tek Maç", new { @id = "MacSistemiTekLbl" })
-                                @Html.RadioButtonFor(m => m.FiksturMotoru.MacSistemi, "C", new { @id = "MacSistemiCift" }) @Html.Label("Çift Maç", new { @id = "MacSistemiCiftLbl" })
+                                </div>
+                                <div class="form-group">
+                                    <label id="GrupSayisiLbl" for="Grup Sayısı" class="control-label mb-1">Grup Sayısı</label>
+                                    @Html.TextBoxFor(m => m.FiksturMotoru.GrupSayisi, new { @id = "GrupSayisi", @class = "form-control" })
+                                </div>
+                                <div class="form-group has-success">
+                                    <label id="GrupAdiTuruLbl" for="GrupAdiTuru" class="control-label mb-1">Grup Adi Turu</label>
+                                    @Html.DropDownListFor(m => m.FiksturMotoru.GrupAdiTuru, (List<SelectListItem>)ViewBag.GrupAdiTuru, new { @id = "GrupAdiTuru", @class = "form-control" })
 
-                                <div>
-                                    @if (@ViewBag.Basari == 1)
-                                    {
-                                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                                            <span class="badge badge-pill badge-success">Başarılı</span> Fikstür Kaydedildi.
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                    }
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <i class="fa fa-dot-circle-o"></i> Kaydet
-                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    @Html.RadioButtonFor(m => m.FiksturMotoru.MacSistemi, "T", new { @id = "MacSistemiTek" }) @Html.Label("Tek Maç", new { @id = "MacSistemiTekLbl" })
+                                    @Html.RadioButtonFor(m => m.FiksturMotoru.MacSistemi, "C", new { @id = "MacSistemiCift" }) @Html.Label("Çift Maç", new { @id = "MacSistemiCiftLbl" })
+
+                                    <div>
+                                        @if (@ViewBag.Basari == 1)
+                                        {
+                                            <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                                <span class="badge badge-pill badge-success">Başarılı</span> Gruplar Oluşturuldu.
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <button id="Kaydet" type="submit" class="btn btn-success btn-lg">
+                                            <i class="fa fa-dot-circle-o"></i> Kaydet
+                                        </button>
+
+                                    </div>
 
                                 </div>
 
                             </div>
-
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
+        </div>
+    }
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if (Model.GrupAdlari != null)
+{
+
+    if (ViewBag.ManuelGrup == false)
+    {
+        <div class="col-lg-12">
+            <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                <span class="badge badge-pill badge-success">Gruplar Oluştu.</span> Grupları yeniden oluşturmak için F5 e basın.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    }
+
+
+
+    foreach (var Grup in Model.GrupAdlari)
+    {
+
+
+        <div class="col-sm-3">
+
+
+            <div class="card">
+                <div class="card-header">
+
+                    <h4>@Grup.GrupId Grup</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" width="100%">
+
+
+
+                        @foreach (var item in Model.Gruplar)
+                        {
+                            if (Grup.GrupId == item.GrupId)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.TakimAdi)</td>
+
+                                    </tr>
+
+                                </tbody>
+                            }
+                        }
+
+
+
+                    </table>
+                </div>
+
+
+            </div>
         </div>
 
-</div>
 
 
-        @if (Model.GrupAdlari != null)
+
+
+    }
+}
+
+
+
+
+
+@if (Model.GrupAdlari != null)
+{
+
+    using (Html.BeginForm("Eslesmeler", "FiksturMotoru", FormMethod.Post, new { @id = "Eslesmeler", @class = "Eslesmeler" }))
+    {
+
+        <table border="0">
+            @for (int i = 0; i < Model.Gruplar.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model => Model.Gruplar[i].GrupId, new { @class = "GrupId" })
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => Model.Gruplar[i].TakimId, new { @class = "TakimId" })
+                    </td>
+
+                </tr>
+            }
+        </table>
+
+        if (ViewBag.Basari == 1)
         {
-        foreach (var Grup in Model.GrupAdlari)
-        {
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
+            <div class="breadcrumbs" id="KaydetDevamEt">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
 
-                        <h4>@Grup.GrupId Grup</h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">TakimAdi</th>
-                                </tr>
-                            </thead>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li class="active">
+                                    <button id="Kaydet" type="submit" class="btn btn-success btn-lg"><i class="fa fa-dot-circle-o"></i> Kaydet ve Devamet</button>
+                                </li>
 
+                                <li class="active">   @Html.ActionLink("Çıkış", "Cikis", "FiksturMotoru", null, new { @class = "btn btn-primary btn-lg" })</li>
 
-                            @foreach (var item in Model.Gruplar)
-                            {
-                                if (Grup.GrupId == item.GrupId)
-                                {
-                                    <tbody>
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.TakimAdi)</td>
-
-                                        </tr>
-
-                                    </tbody>
-                                }
-                            }
-
-
-
-                        </table>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
         }
+        else if (ViewBag.ManuelGrup == true)
+        {
+
+            <div class="breadcrumbs" id="KaydetDevamEt">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li class="active">  <button id="Kaydet" type="submit" class="btn btn-success btn-lg"><i class="fa fa-dot-circle-o"></i> Kaydet ve Devamet</button> </li>
+
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         }
+
+
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+

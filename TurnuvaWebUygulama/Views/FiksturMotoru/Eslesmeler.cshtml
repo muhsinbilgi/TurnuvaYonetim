@@ -1,0 +1,112 @@
+﻿@model VeritabaniKatmani.GrupListele
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Fikstür Motoru Eşleşmeler</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-sm-5">
+    <div class="card">
+        <div id="pay-invoice">
+            <div class="card-body">
+
+                <hr>
+
+
+
+                @using (Html.BeginForm("Eslesmeler", "FiksturMotoru", FormMethod.Post, new { @id = "EslesmeKaydet", @class = "EslesmeKaydet" }))
+                {
+
+            <div class="form-group has-success">
+
+                <div class="form-group">
+                    <label id="TurnuvaBaslamaTarihi" for="TurnuvaBaslamaTarihi" class="control-label mb-1">Turnuva Başlama Tarihi</label>
+                    @Html.TextBoxFor(m => m.EslesmeMotoru.TurnuvaBaslamaTarihi, new { @id = "GrupSayisi", @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label id="IlkMacSaati" for="IlkMacSaati" class="control-label mb-1">İlk Maç Başlama Saati</label>
+                    @Html.TextBoxFor(m => m.EslesmeMotoru.IlkMacSaati, new { @id = "GrupSayisi", @class = "form-control" })
+                </div>
+
+                <div class="form-group has-success">
+                    <label id="GundeKacMac" for="GundeKacMac" class="control-label mb-1">Günde Kaç Maç Oynanacak</label>
+                    @Html.DropDownListFor(m => m.EslesmeMotoru.GundeKacMac, (List<SelectListItem>)ViewBag.GundeKacMac, new { @id = "GundeKacMac", @class = "form-control" })
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Gunler" class="control-label mb-1">Maç Oynanacak Günler</label>
+                    <table cellpadding="8" border="0">
+
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[0].Secim)
+                            <label>Pazartesi</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[1].Secim)
+                            <label>Salı</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[2].Secim)
+                            <label>Çarşamba</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[3].Secim)
+                            <label>Perşembe</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[4].Secim)
+                            <label>Cuma</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[5].Secim)
+                            <label>Cumartesi</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.Gunler[6].Secim)
+                            <label>Pazar</label>
+                        </td>
+
+
+                    </table>
+
+                </div>
+
+
+                <div>
+                    @if (@ViewBag.Basari == 1)
+                    {
+                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                            <span class="badge badge-pill badge-success">Başarılı</span> Eşleşmeler Oluşturuldu.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    }
+                    <button id="Kaydet" type="submit" class="btn btn-success btn-lg">
+                        <i class="fa fa-dot-circle-o"></i> Kaydet
+                    </button>
+
+                </div>
+
+            </div>
+
+        
+                }
+            </div>
+        </div>
+    </div>
+</div>

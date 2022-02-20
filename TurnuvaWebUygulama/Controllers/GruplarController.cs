@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using VeritabaniKatmani;
 using TurnuvaWebUygulama.Helper;
 using VeritabaniKatmani.SqlQuery;
-using OperasyonKatmani.GrupOperasyon;
+using OperasyonKatmani.FiksturOperasyon;
 
 namespace TurnuvaWebUygulama.Controllers
 {
@@ -33,7 +33,7 @@ namespace TurnuvaWebUygulama.Controllers
         {
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
             GrupTakim model = new GrupTakim();
-            model.Takimlar = Getir.GrupsuzTakimGetir(m.SeciliTurnuva);
+            model.Takimlar = Grup.GrupsuzTakimGetir(m.SeciliTurnuva);
             model.GrupListe = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
             model.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
 
@@ -61,7 +61,7 @@ namespace TurnuvaWebUygulama.Controllers
             }
 
             
-            model.Takimlar =  Getir.GrupsuzTakimGetir(m.SeciliTurnuva);
+            model.Takimlar =  Grup.GrupsuzTakimGetir(m.SeciliTurnuva);
             model.GrupListe = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
             model.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
 

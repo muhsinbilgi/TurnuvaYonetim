@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using VeritabaniKatmani;
 using TurnuvaWebUygulama.Helper;
 using VeritabaniKatmani.SqlQuery;
-using OperasyonKatmani.GrupOperasyon;
+using OperasyonKatmani.FiksturOperasyon;
 
 namespace TurnuvaWebUygulama.Controllers
 {

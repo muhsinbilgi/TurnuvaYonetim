@@ -105,6 +105,8 @@ namespace VeritabaniKatmani.SqlQuery
             public static string Delete => "delete from Hafta where Id = @Id";
             public static string GetAll => @"select * from Hafta";
             public static string GetbyId => "select * from Hafta where Id = @Id";
+
+            public static string GetbyAd => "select * from Hafta where Adi = @Adi";
         }
         public static class Turnuva
         {
@@ -345,10 +347,12 @@ namespace VeritabaniKatmani.SqlQuery
                                               t1.Adi as BirinciTakimAdi,
                                               t2.Adi as IkinciTakimAdi
                                               from maclar m
-                                              inner join Hafta h on h.Id = m.Hafta
-                                              inner join takimlar t1 on t1.Id = m.BirinciTakimId
-                                              inner join takimlar t2 on t2.Id = m.IkinciTakimId
-                                              where m.TurnuvaId = @TurnuvaId";
+                                              left join Hafta h on h.Id = m.Hafta
+                                              left join takimlar t1 on t1.Id = m.BirinciTakimId
+                                              left join takimlar t2 on t2.Id = m.IkinciTakimId
+                                              where m.TurnuvaId = @TurnuvaId
+                                             order by t2.Adi DESC";
+                                               
                           
 
          
@@ -581,9 +585,21 @@ where m.Id = @Id";
 
 
 
+        public static class Gunler
+        {
+
+            public static string GetAll => "select * from gunler";
 
 
+        }
 
+        public static class MacSablonu
+        {
+
+            public static string GetCount => "select count(*) as GrupMacSayisi from macsablon where GrupTakimSayisi = @Sayi";
+
+            public static string GetAll => "select * from macsablon";
+        }
 
 
 

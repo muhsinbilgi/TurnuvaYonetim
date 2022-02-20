@@ -7,9 +7,9 @@ using VeritabaniKatmani;
 using VeritabaniKatmani.SqlQuery;
 using OperasyonKatmani.Helper;
 
-namespace OperasyonKatmani.GrupOperasyon
+namespace OperasyonKatmani.FiksturOperasyon
 {
-    public class Getir
+    public class Grup
     {
 
         public static int PuanHesapla(int TurnuvaId)
@@ -26,6 +26,7 @@ namespace OperasyonKatmani.GrupOperasyon
 
             return 1;
         }
+       
         public static string GrupAdiGetir(int i, int Tur)
         {
             String GrupId = null;
@@ -96,7 +97,7 @@ namespace OperasyonKatmani.GrupOperasyon
         }
 
 
-        public static GrupListele FiksturOlustur(FiksturMotoru model)
+        public static GrupListele GrupOlustur(FiksturMotoru model)
         {
             List<Takimlar> TakimListesi = MvcDbHelper.Repository.GetById<Takimlar>(Queries.Takimlar.GetbyY, new { TurnuvaId = model.TurnuvaId }).ToList();
             List<Gruplar> GrupListesi = new List<Gruplar>();
@@ -108,8 +109,9 @@ namespace OperasyonKatmani.GrupOperasyon
 
                 var TakimSayisi = MvcDbHelper.Repository.GetById<Turnuva>(Queries.Turnuva.GetByTakimSayisi, new { Id = model.TurnuvaId }).FirstOrDefault();
                 int GrupTakimAdeti = (TakimSayisi.TakimSayisi / model.GrupSayisi);
-               
-                
+                int mod = (TakimSayisi.TakimSayisi % model.GrupSayisi);
+            
+
                 for (int i = 1; i <= model.GrupSayisi; i++)
                 {
                     GrupAdlari GrpAd = new GrupAdlari();
@@ -121,7 +123,10 @@ namespace OperasyonKatmani.GrupOperasyon
                         GrpAd.GrupId = GrupAdiGetir(i, model.GrupAdiTuru);
                     }
 
-                   
+                    if(mod != 0)
+                    {
+                        GrupTakimAdeti = GrupTakimAdeti + 1;
+                    } 
 
                     for (int t=1; t <= GrupTakimAdeti; t++)
                     {
@@ -157,10 +162,11 @@ namespace OperasyonKatmani.GrupOperasyon
 
                         TakimListesi.RemoveAt(Sayi);
 
-                        
+                                               
                     }
 
-
+                    GrupTakimAdeti = GrupTakimAdeti - 1;
+                    mod = mod - 1;
 
 
 

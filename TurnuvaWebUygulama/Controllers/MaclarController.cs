@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using VeritabaniKatmani;
 using TurnuvaWebUygulama.Helper;
 using VeritabaniKatmani.SqlQuery;
-using OperasyonKatmani.GrupOperasyon;
+using OperasyonKatmani.FiksturOperasyon;
 
 namespace TurnuvaWebUygulama.Controllers
 {
@@ -126,7 +126,7 @@ namespace TurnuvaWebUygulama.Controllers
             }
 
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
-            Getir.PuanHesapla(m.SeciliTurnuva);
+            Grup.PuanHesapla(m.SeciliTurnuva);
 
 
 
@@ -179,7 +179,7 @@ namespace TurnuvaWebUygulama.Controllers
             Maclar model = new Maclar() { Id = Id };
             MvcDbHelper.Repository.Delete<Maclar>(Queries.Maclar.Delete, model);
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
-            Getir.PuanHesapla(m.SeciliTurnuva);
+            Grup.PuanHesapla(m.SeciliTurnuva);
             return RedirectToAction("Index");
         }
 
@@ -212,7 +212,7 @@ namespace TurnuvaWebUygulama.Controllers
             }
 
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
-            Getir.PuanHesapla(m.SeciliTurnuva);
+            Grup.PuanHesapla(m.SeciliTurnuva);
 
 
 

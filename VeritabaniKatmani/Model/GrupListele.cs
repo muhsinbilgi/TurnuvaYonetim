@@ -12,10 +12,15 @@ namespace VeritabaniKatmani
     {
 
         public FiksturMotoru FiksturMotoru { get; set; }
+
+        public EslesmeMotoru EslesmeMotoru { get; set; }
         public List<GrupAdlari> GrupAdlari { get; set; }
 
         public List<Gruplar> Gruplar { get; set; }
 
+        public List<Gruplar> KayitliGruplar { get; set; }
+
+        public List<Gunler> Gunler { get; set; }
 
 
     }

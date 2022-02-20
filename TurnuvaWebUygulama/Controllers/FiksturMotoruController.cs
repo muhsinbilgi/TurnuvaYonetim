@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using TurnuvaWebUygulama.Helper;
 using VeritabaniKatmani.SqlQuery;
-using OperasyonKatmani.GrupOperasyon;
+using OperasyonKatmani.FiksturOperasyon;
 
 namespace TurnuvaWebUygulama.Controllers
 {
@@ -15,6 +15,7 @@ namespace TurnuvaWebUygulama.Controllers
         // GET: FiksturMotoru
         public ActionResult Index()
         {
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
             List<SelectListItem> TurnuvaTuru = new List<SelectListItem>();
             var TurnuvaTuruData = new[]{
                  new SelectListItem{ Value="1",Text="Eleme"},
@@ -39,11 +40,24 @@ namespace TurnuvaWebUygulama.Controllers
             GrupAdiTuru = GrupAdiTuruData.ToList();
 
             GrupListele ViewModel = new GrupListele();
+            ViewModel.KayitliGruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
+
+            if (ViewModel.KayitliGruplar.Count == 0)
+            {
+                ViewBag.ManuelGrup = false;
+            }
+            else
+            {
+                ViewBag.ManuelGrup = true;
+                ViewModel.Gruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
+                ViewModel.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+            }
 
 
             ViewBag.TurnuvaTuru = TurnuvaTuru;
             ViewBag.ElemeSistemi = ElemeSistemi;
             ViewBag.GrupAdiTuru = GrupAdiTuru;
+            ViewBag.ViewModel = ViewModel;
             return View(ViewModel);
         }
 
@@ -80,17 +94,119 @@ namespace TurnuvaWebUygulama.Controllers
 
 
             GrupListele ViewModel = new GrupListele();
-            ViewModel = Getir.FiksturOlustur(model.FiksturMotoru);
-            
+            ViewModel = Grup.GrupOlustur(model.FiksturMotoru);
+            ViewModel.KayitliGruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
 
+            if(ViewModel.KayitliGruplar.Count == 0)
+            {
+                ViewBag.ManuelGrup = false;
+            } else
+            {
+                ViewBag.ManuelGrup = true;
+                ViewModel.Gruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
+                ViewModel.GrupAdlari = MvcDbHelper.Repository.GetById<GrupAdlari>(Queries.GrupAdlari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+            }
 
 
             ViewBag.TurnuvaTuru = TurnuvaTuru;
             ViewBag.ElemeSistemi = ElemeSistemi;
             ViewBag.GrupAdiTuru = GrupAdiTuru;
+            ViewBag.ViewModel = ViewModel;
+            ViewBag.Basari = 1;
+
             return View(ViewModel);
 
         }
+
+
+
+
+
+        public ActionResult Eslesmeler()
+        {
+
+
+
+
+
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Eslesmeler(GrupListele model)
+        {
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            model.KayitliGruplar = MvcDbHelper.Repository.GetById<Gruplar>(Queries.Gruplar.GetAll, new { Id = m.SeciliTurnuva }).ToList();
+           
+
+            List<SelectListItem> GundeKacMac = new List<SelectListItem>();
+            var GundeKacMacData = new[]{
+                 new SelectListItem{ Value="1",Text="1"},
+                 new SelectListItem{ Value="2",Text="2"},
+                 new SelectListItem{ Value="3",Text="3"},
+                  new SelectListItem{ Value="4",Text="4"},
+                   new SelectListItem{ Value="5",Text="5"},
+             };
+            GundeKacMac = GundeKacMacData.ToList();
+
+
+
+
+
+
+
+            Gruplar Grp = new Gruplar();
+
+            if (model.KayitliGruplar.Count == 0)
+            {
+                foreach (var item in model.Gruplar)
+                {
+                    Grp.GrupId = item.GrupId;
+                    Grp.TurnuvaId = m.SeciliTurnuva;
+                    Grp.TakimId = item.TakimId;
+
+                    MvcDbHelper.Repository.Insert(Queries.Gruplar.Insert, Grp);
+                }
+
+            }
+
+            if (model.EslesmeMotoru != null)
+            {
+                model.EslesmeMotoru.TurnuvaId = m.SeciliTurnuva;
+                foreach(var item in Eslesme.MacOlustur(model))
+                {
+                    MvcDbHelper.Repository.Insert(Queries.Maclar.Insert, item);
+                }
+
+                
+            }
+
+
+            ViewBag.GundeKacMac = GundeKacMac;
+            return View();
+        }
+
+
+
+
+
+        public ActionResult Cikis()
+        {
+
+            ViewBag.Basari = null;
+            return RedirectToAction("Index");
+
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

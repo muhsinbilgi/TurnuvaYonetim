@@ -8,12 +8,18 @@ using System.Threading.Tasks;
 
 namespace VeritabaniKatmani
 {
-    public class GrupAdlari : IDbModel
+    public class MacSablonu : IDbModel
     {
         public int Id { get; set; }
-        public string GrupId { get; set; }
+        public int BirinciTakim { get; set; }
+        public int IkinciTakim { get; set; }
+        public int Tur { get; set; }
+        public int GrupTakimSayisi { get; set; }
+       
 
-        public int GrupMacSayisi { get; set; }
+
+
+
 
 
         public AbstractDapperRepository Repository { get; set; }
