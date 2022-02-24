@@ -20,6 +20,8 @@ namespace VeritabaniKatmani
         public int HaftaSayisi { get; set; }
         public int ToplamMacSayisi { get; set; }
 
+        public bool ManuelTarih { get; set; }
+
         public AbstractDapperRepository Repository { get; set; }
 
         public void SetId(object id)

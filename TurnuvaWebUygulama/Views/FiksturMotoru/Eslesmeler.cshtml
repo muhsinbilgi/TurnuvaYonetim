@@ -6,107 +6,300 @@
 
 
 
+<link rel="stylesheet" href="~/Content/step.css">
 
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Fikstür Motoru Eşleşmeler</h1>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#idchk").change(function () {
+            var st = this.checked;
+            if (st) {
+                $("#GrupSayisi").prop("disabled", true);
+                $("#IlkMacSaati").prop("disabled", true);
+                $("#GundeKacMac").prop("disabled", true);
+                $("#Pazartesi").prop("disabled", true);
+                $("#Sali").prop("disabled", true);
+                $("#Carsamba").prop("disabled", true);
+                $("#Persembe").prop("disabled", true);
+                $("#Cuma").prop("disabled", true);
+                $("#Cumartesi").prop("disabled", true);
+                $("#Pazar").prop("disabled", true);
+                $("#TurnuvaBaslamaTarihi").css({ 'color': 'lightgray', });
+                $("#MacbaslamaSaati").css({ 'color': 'lightgray', });
+                $("#KacMacOynanacak").css({ 'color': 'lightgray', });
+                $("#MacOynanacakGunler").css({ 'color': 'lightgray', });
+                $("#Pazartesilbl").css({ 'color': 'lightgray', });
+                $("#Salilbl").css({ 'color': 'lightgray', });
+                $("#Carsambalbl").css({ 'color': 'lightgray', });
+                $("#Persembelbl").css({ 'color': 'lightgray', });
+                $("#Cumalbl").css({ 'color': 'lightgray', });
+                $("#Cumartesilbl").css({ 'color': 'lightgray', });
+                  $("#Pazarlbl").css({ 'color': 'lightgray', });
+            }
+            else {
+                $("#GrupSayisi").prop("disabled", false);
+                $("#IlkMacSaati").prop("disabled", false);
+                $("#GundeKacMac").prop("disabled", false);
+                $("#Pazartesi").prop("disabled", false);
+                $("#Sali").prop("disabled", false);
+                $("#Carsamba").prop("disabled", false);
+                $("#Persembe").prop("disabled", false);
+                $("#Cuma").prop("disabled", false);
+                $("#Cumartesi").prop("disabled", false);
+                $("#Pazar").prop("disabled", false);
+                $("#TurnuvaBaslamaTarihi").css({ 'color': 'black', });
+                $("#MacbaslamaSaati").css({ 'color': 'black', });
+                $("#KacMacOynanacak").css({ 'color': 'black', });
+                $("#MacOynanacakGunler").css({ 'color': 'black', });
+                $("#Pazartesilbl").css({ 'color': 'black', });
+                $("#Salilbl").css({ 'color': 'black', });
+                $("#Carsambalbl").css({ 'color': 'black', });
+                $("#Persembelbl").css({ 'color': 'black', });
+                $("#Cumalbl").css({ 'color': 'black', });
+                $("#Cumartesilbl").css({ 'color': 'black', });
+                  $("#Pazarlbl").css({ 'color': 'black', });
+            }
+        });
+    });
+</script>
+
+
+
+
+
+@if (Model.Maclar == null)
+{
+
+    <div class="container">
+
+        <div class="col-xl-12 justify-content-md-center text-center">
+
+
+            <ul id="progressbar">
+                <li class="active" id="step1"><strong>Turnuva Türü Seç</strong> </li>
+                <li class="active" id="step2"><strong>Eşleşme Kriterleri</strong></li>
+                <li id="step3"><strong>Fikstür</strong></li>
+
+            </ul>
+
+
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-6">
+            <div class="card">
+
+                <div class="card-body">
+
+
+
+
+
+                    @using (Html.BeginForm("Eslesmeler", "FiksturMotoru", FormMethod.Post, new { @id = "EslesmeKaydet", @class = "EslesmeKaydet" }))
+                    {
+                        <div class="form-group">
+                            @Html.CheckBoxFor(x => x.EslesmeMotoru.ManuelTarih, new { @id = "idchk" })
+                            <label> Maç Tarihlerini ben gireceğim.</label>
+                        </div>
+                        <hr />
+                        <div class="form-group has-success">
+
+                            <div class="form-group">
+                                <label id="TurnuvaBaslamaTarihi" for="TurnuvaBaslamaTarihi" class="control-label mb-1">Turnuva Başlama Tarihi</label>
+                                @Html.TextBoxFor(m => m.EslesmeMotoru.TurnuvaBaslamaTarihi, new { @id = "GrupSayisi", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label id="MacbaslamaSaati" for="MacbaslamaSaati" class="control-label mb-1">İlk Maç Başlama Saati</label>
+                                @Html.TextBoxFor(m => m.EslesmeMotoru.IlkMacSaati, new { @id = "IlkMacSaati", @class = "form-control" })
+                            </div>
+
+                            <div class="form-group has-success">
+                                <label id="KacMacOynanacak" for="GundeKacMac" class="control-label mb-1">Günde Kaç Maç Oynanacak</label>
+                                @Html.DropDownListFor(m => m.EslesmeMotoru.GundeKacMac, (List<SelectListItem>)ViewBag.GundeKacMac, new { @id = "GundeKacMac", @class = "form-control" })
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Gunler" class="control-label mb-1" id="MacOynanacakGunler">Maç Oynanacak Günler</label>
+                                <table cellpadding="8" border="0">
+
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[0].Secim, new { @id = "Pazartesi" })
+                                        <label id="Pazartesilbl">Pazartesi</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[1].Secim, new { @id = "Sali" })
+                                        <label id="Salilbl">Salı</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[2].Secim, new { @id = "Carsamba" })
+                                        <label id="Carsambalbl">Çarşamba</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[3].Secim, new { @id = "Persembe" })
+                                        <label id="Persembelbl">Perşembe</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[4].Secim, new { @id = "Cuma" })
+                                        <label id="Cumalbl">Cuma</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[5].Secim, new { @id = "Cumartesi" })
+                                        <label id="Cumartesilbl">Cumartesi</label>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => x.Gunler[6].Secim, new { @id = "Pazar" })
+                                        <label id="Pazarlbl">Pazar</label>
+                                    </td>
+
+
+                                </table>
+
+                            </div>
+
+
+                            <div>
+                                @if (@ViewBag.Basari == 1)
+                                {
+                                    <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                        <span class="badge badge-pill badge-success">Başarılı</span> Eşleşmeler Oluşturuldu.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                }
+                                <button id="Kaydet" type="submit" class="btn btn-success btn-lg">
+                                    <i class="fa fa-dot-circle-o"></i> Kaydet ve Devam Et
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                    }
+                </div>
             </div>
         </div>
     </div>
 
-</div>
 
-<div class="col-sm-5">
-    <div class="card">
-        <div id="pay-invoice">
-            <div class="card-body">
+}
+else
+{
 
-                <hr>
+    <div class="container">
+
+        <div class="col-xl-12 justify-content-md-center text-center">
+
+
+            <ul id="progressbar">
+                <li class="active" id="step1"><strong>Turnuva Türü Seç</strong> </li>
+                <li class="active" id="step2"><strong>Eşleşme Kriterleri</strong></li>
+                <li class="active" id="step3"><strong>Fikstür</strong></li>
+
+            </ul>
 
 
 
-                @using (Html.BeginForm("Eslesmeler", "FiksturMotoru", FormMethod.Post, new { @id = "EslesmeKaydet", @class = "EslesmeKaydet" }))
-                {
+        </div>
+    </div>
 
-            <div class="form-group has-success">
 
-                <div class="form-group">
-                    <label id="TurnuvaBaslamaTarihi" for="TurnuvaBaslamaTarihi" class="control-label mb-1">Turnuva Başlama Tarihi</label>
-                    @Html.TextBoxFor(m => m.EslesmeMotoru.TurnuvaBaslamaTarihi, new { @id = "GrupSayisi", @class = "form-control" })
+
+
+
+    foreach (var MacHafta in Model.MacHaftalari)
+    {
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4>@MacHafta.Hafta Hafta</h4>
                 </div>
-                <div class="form-group">
-                    <label id="IlkMacSaati" for="IlkMacSaati" class="control-label mb-1">İlk Maç Başlama Saati</label>
-                    @Html.TextBoxFor(m => m.EslesmeMotoru.IlkMacSaati, new { @id = "GrupSayisi", @class = "form-control" })
-                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tarih</th>
+                                <th scope="col">Saat</th>
+                                <th scope="col">Takım Adı</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Takım Adı</th>
+                            </tr>
+                        </thead>
 
-                <div class="form-group has-success">
-                    <label id="GundeKacMac" for="GundeKacMac" class="control-label mb-1">Günde Kaç Maç Oynanacak</label>
-                    @Html.DropDownListFor(m => m.EslesmeMotoru.GundeKacMac, (List<SelectListItem>)ViewBag.GundeKacMac, new { @id = "GundeKacMac", @class = "form-control" })
 
-                </div>
+                        @foreach (var item in Model.Maclar)
+                        {
+                            if (MacHafta.Hafta == item.Hafta)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null)
+                                            {<b>Bay</b> }
+                                            else
+                                            { @Html.DisplayFor(modelItem => item.Tarih)}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null)
+                                            {<b>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</b> }
+                                        else
+                                        {@Html.DisplayFor(modelItem => item.Saat)}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null) { }
+                                            else
+                                            {@Html.DisplayFor(modelItem => item.BirinciTakimAdi)}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null) { }
+                                            else
+                                            {@Html.DisplayFor(modelItem => item.BirinciTakimSkor)}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null) { }
+                                            else
+                                            {<p>-</p>}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null) { }
+                                            else
+                                            {@Html.DisplayFor(modelItem => item.IkinciTakimSkor)}
+                                        </td>
+                                        <td>
+                                            @if (item.IkinciTakimAdi == null) { }
+                                            else
+                                            {@Html.DisplayFor(modelItem => item.IkinciTakimAdi)}
+                                        </td>
 
-                <div class="form-group">
-                    <label for="Gunler" class="control-label mb-1">Maç Oynanacak Günler</label>
-                    <table cellpadding="8" border="0">
+                                    </tr>
 
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[0].Secim)
-                            <label>Pazartesi</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[1].Secim)
-                            <label>Salı</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[2].Secim)
-                            <label>Çarşamba</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[3].Secim)
-                            <label>Perşembe</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[4].Secim)
-                            <label>Cuma</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[5].Secim)
-                            <label>Cumartesi</label>
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(x => x.Gunler[6].Secim)
-                            <label>Pazar</label>
-                        </td>
+                                </tbody>
+                            }
+                        }
+
 
 
                     </table>
-
                 </div>
-
-
-                <div>
-                    @if (@ViewBag.Basari == 1)
-                    {
-                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                            <span class="badge badge-pill badge-success">Başarılı</span> Eşleşmeler Oluşturuldu.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                    }
-                    <button id="Kaydet" type="submit" class="btn btn-success btn-lg">
-                        <i class="fa fa-dot-circle-o"></i> Kaydet
-                    </button>
-
-                </div>
-
-            </div>
-
-        
-                }
             </div>
         </div>
-    </div>
-</div>
+    }
+}
+
+
+
+
+
+
+
+
+
+

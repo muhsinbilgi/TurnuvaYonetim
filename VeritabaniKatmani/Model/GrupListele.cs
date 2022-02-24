@@ -21,6 +21,10 @@ namespace VeritabaniKatmani
         public List<Gruplar> KayitliGruplar { get; set; }
 
         public List<Gunler> Gunler { get; set; }
+        public List<MacHaftalari> MacHaftalari { get; set; }
+        public List<Maclar> Maclar { get; set; }
+
+       
 
 
     }

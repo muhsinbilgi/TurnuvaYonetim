@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model VeritabaniKatmani.MacListele
+
+
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+     
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                    {
+                    <li class="active"> @Html.ActionLink("Maç Ekle", "Ekle", "Maclar", new { @class = "btn btn-success btn-lg" })</li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@foreach (var MacHafta in Model.MacHaftalari)
+{
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <h4>@MacHafta.Hafta Hafta</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tarih</th>
+                            <th scope="col">Saat</th>
+                            <th scope="col">Takım Adı</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Takım Adı</th>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model.Maclar)
+                    {
+                        if (MacHafta.Hafta == item.Hafta)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@if (item.IkinciTakimAdi == null) { <b>Bay</b> } else { @Html.DisplayFor(modelItem => item.Tarih)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { <b>@Html.DisplayFor(modelItem => item.BirinciTakimAdi)</b> } else {@Html.DisplayFor(modelItem => item.Saat)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.BirinciTakimAdi)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.BirinciTakimSkor)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {<p>-</p> }</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.IkinciTakimSkor)}</td>
+                                    <td>@if (item.IkinciTakimAdi == null) { } else {@Html.DisplayFor(modelItem => item.IkinciTakimAdi)}</td>
+                                    
+                                </tr>
+
+                            </tbody>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

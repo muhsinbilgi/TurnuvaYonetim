@@ -130,7 +130,7 @@ namespace TurnuvaWebUygulama.Controllers
 
 
 
-            return View();
+         return View();
         }
         [HttpPost]
         public ActionResult Eslesmeler(GrupListele model)
@@ -141,6 +141,7 @@ namespace TurnuvaWebUygulama.Controllers
 
             List<SelectListItem> GundeKacMac = new List<SelectListItem>();
             var GundeKacMacData = new[]{
+                 new SelectListItem{ Value="0", Text=" "},
                  new SelectListItem{ Value="1",Text="1"},
                  new SelectListItem{ Value="2",Text="2"},
                  new SelectListItem{ Value="3",Text="3"},
@@ -170,21 +171,52 @@ namespace TurnuvaWebUygulama.Controllers
 
             }
 
+
+
             if (model.EslesmeMotoru != null)
             {
+
+                if(model.EslesmeMotoru.ManuelTarih == true)
+                { 
                 model.EslesmeMotoru.TurnuvaId = m.SeciliTurnuva;
                 foreach(var item in Eslesme.MacOlustur(model))
                 {
                     MvcDbHelper.Repository.Insert(Queries.Maclar.Insert, item);
                 }
+               
+                model.MacHaftalari = MvcDbHelper.Repository.GetById<MacHaftalari>(Queries.MacHaftalari.GetbyId, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+                model.Maclar = MvcDbHelper.Repository.GetById<Maclar>(Queries.Maclar.GetAll, new { TurnuvaId = m.SeciliTurnuva }).ToList();
+                }else
+                {
 
-                
+                    // Otomatik maç saatleri hesaplanacak
+
+
+
+                }
+
+
+
+
+
+
+
             }
 
 
             ViewBag.GundeKacMac = GundeKacMac;
-            return View();
+            return View(model);
         }
+
+
+
+
+
+
+
+
+
+
 
 
 
