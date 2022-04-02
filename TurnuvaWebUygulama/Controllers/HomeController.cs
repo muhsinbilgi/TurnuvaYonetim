@@ -16,12 +16,11 @@ namespace TurnuvaWebUygulama.Controllers
         {
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
 
-            int Id = m.SeciliTurnuva;
 
             GenelBilgiler model = new GenelBilgiler();          
-            model.Istatistikler = MvcDbHelper.Repository.GetById<Istatistikler>(Queries.GenelBilgiler.istatistikler, new { Id = Id }).FirstOrDefault();
-            model.GolKralligi = MvcDbHelper.Repository.GetById<GolKralligi>(Queries.GenelBilgiler.golkralligi, new { Id = Id }).ToList();
-            model.Centilmenlik = MvcDbHelper.Repository.GetById<Centilmenlik>(Queries.GenelBilgiler.centilmenlik, new { Id = Id }).ToList();
+            model.Istatistikler = MvcDbHelper.Repository.GetById<Istatistikler>(Queries.GenelBilgiler.istatistikler, new { Id = m.SeciliTurnuva }).FirstOrDefault();
+            model.GolKralligi = MvcDbHelper.Repository.GetById<GolKralligi>(Queries.GenelBilgiler.golkralligi, new { Id = m.SeciliTurnuva }).ToList();
+            model.Centilmenlik = MvcDbHelper.Repository.GetById<Centilmenlik>(Queries.GenelBilgiler.centilmenlik, new { Id = m.SeciliTurnuva }).ToList();
 
             
 
@@ -72,7 +71,7 @@ namespace TurnuvaWebUygulama.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ayarlar(Turnuva model)
+        public ActionResult Ayarlar(Kullanicilar model)
         {
             var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
 
@@ -111,5 +110,77 @@ namespace TurnuvaWebUygulama.Controllers
      
             return View();
         }
+
+
+
+
+
+        public ActionResult Profilim()
+        {
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            var model = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyId, new { Id = m.Id }).FirstOrDefault();
+  
+            return View(model);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult ProfilDuzenle(Kullanicilar model, HttpPostedFileBase file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Image/")
+                                                          + file.FileName);
+                    model.Resim = file.FileName;
+                    
+                }
+            }
+
+            var m = MvcDbHelper.Repository.GetById<Kullanicilar>(Queries.Kullanicilar.GetbyName, new { KullaniciAdi = User.Identity.Name }).FirstOrDefault();
+            model.Id = m.Id;
+
+            ViewBag.Basari = 1;
+
+            MvcDbHelper.Repository.Update(Queries.Kullanicilar.ProfilUpdate, model);
+
+            return RedirectToAction("Profilim");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

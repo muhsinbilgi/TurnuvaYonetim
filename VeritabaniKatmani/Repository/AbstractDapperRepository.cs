@@ -35,6 +35,12 @@ namespace VeritabaniKatmani.Repository
 
         public TEntity Insert<TEntity>(String sqlQuery, TEntity item) where TEntity : IDbModel
         {
+
+            var result = DbConnection.ExecuteScalar(sqlQuery, item);
+            item.SetId(result);
+
+            /*
+
             try
             {
                 var result = DbConnection.ExecuteScalar(sqlQuery, item);
@@ -43,13 +49,16 @@ namespace VeritabaniKatmani.Repository
             }
             catch (Exception ex)
             {
+                
 
-            }
+            }  */
             return item;
         }
 
         public IEnumerable<TEntity> GetAll<TEntity>(String sqlQuery) where TEntity : IDbModel
         {
+            return DbConnection.Query<TEntity>(sqlQuery).ToList();
+            /*
             try
             {
                 return DbConnection.Query<TEntity>(sqlQuery).ToList();
@@ -59,12 +68,14 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
                 return null;
-            }
+            }  */
 
         }
 
         public IEnumerable<TEntity> GetById<TEntity>(String sqlQuery, object parameters) where TEntity : IDbModel
         {
+            return DbConnection.Query<TEntity>(sqlQuery, parameters).ToList();
+            /*
             try
             {
                 return DbConnection.Query<TEntity>(sqlQuery, parameters).ToList();
@@ -72,11 +83,13 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
                 return null;
-            }
+            }  */
         }
 
         public IEnumerable<TEntity> GetSearch<TEntity>(String sqlQuery, object parameters) where TEntity : IDbModel
         {
+            return DbConnection.Query<TEntity>(sqlQuery, parameters).ToList();
+            /*
             try
             {
                 return DbConnection.Query<TEntity>(sqlQuery, parameters).ToList();
@@ -85,10 +98,14 @@ namespace VeritabaniKatmani.Repository
             {
                 return null;
             }
+            */
         }
 
         public TEntity Update<TEntity>(string sqlQuery, TEntity item) where TEntity : IDbModel
         {
+            DbConnection.Execute(sqlQuery, item);
+
+            /*
             try
             {
                 DbConnection.Execute(sqlQuery, item);
@@ -96,12 +113,14 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
 
-            }
+            }  */
             return item;
 
         }
         public void Delete<TEntity>(string sqlQuery, TEntity item) where TEntity : IDbModel
         {
+            DbConnection.Execute(sqlQuery, item);
+            /*
             try
             {
                 DbConnection.Execute(sqlQuery, item);
@@ -110,12 +129,15 @@ namespace VeritabaniKatmani.Repository
             {
 
             }
-
+            */
 
         }
 
         public void Onay<TEntity>(string sqlQuery, TEntity item) where TEntity : IDbModel
         {
+
+            DbConnection.Execute(sqlQuery, item);
+            /*
             try
             {
                 DbConnection.Execute(sqlQuery, item);
@@ -123,7 +145,7 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
 
-            }
+            } */
 
 
         }
@@ -139,7 +161,8 @@ namespace VeritabaniKatmani.Repository
 
         public void ExecuteNonQuery(String sqlQuery, object parameter)
         {
-
+            DbConnection.Execute(sqlQuery, parameter);
+            /*
             try
             {
                 DbConnection.Execute(sqlQuery, parameter);
@@ -147,11 +170,12 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
 
-            }
+            }  */
         }
         public void ExecuteNonQuery(String sqlQuery)
         {
-
+            DbConnection.Execute(sqlQuery);
+            /*
             try
             {
                 DbConnection.Execute(sqlQuery);
@@ -159,10 +183,12 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
 
-            }
+            }  */
         }
         public int Execute(string sqlQuery, object parameter)
         {
+            return DbConnection.ExecuteScalar<int>(sqlQuery, parameter);
+            /*
             try
             {
                 return DbConnection.ExecuteScalar<int>(sqlQuery, parameter);
@@ -170,11 +196,14 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
                 return -1;
-            }
+            }  */
         }
 
         public object Execute<T>(string sqlQuery, object parameter)
         {
+
+            return DbConnection.ExecuteScalar<T>(sqlQuery, parameter);
+            /*
             try
             {
                 return DbConnection.ExecuteScalar<T>(sqlQuery, parameter);
@@ -182,7 +211,7 @@ namespace VeritabaniKatmani.Repository
             catch (Exception ex)
             {
                 return null;
-            }
+            } */
         }
         #endregion
 

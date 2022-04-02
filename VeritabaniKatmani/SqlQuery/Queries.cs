@@ -18,13 +18,23 @@ namespace VeritabaniKatmani.SqlQuery
                                          `KullaniciAdi` = @KullaniciAdi,
                                          `Parola` = @Parola,
                                          `Rol` = @Rol,
-                                         `SonGirisZamani` = @SonGirisZamani,
                                          `TakimId` = @TakimId,
                                          `SeciliTurnuva` = @SeciliTurnuva,
                                           `Resim` = @Resim
                                           where Id = @Id";
 
-         
+            public static string ProfilUpdate => @"update `kullanicilar` set
+                                                  `AdiSoyadi` = @AdiSoyadi,
+                                                  `KullaniciAdi` = @KullaniciAdi,
+                                                  `Parola` = @Parola,
+                                                  `Resim` = @Resim
+                                                   where Id = @Id";
+
+            public static string SonGirisUpdate => @"update `kullanicilar` set
+                                                  `SonGirisZamani` = @SonGirisZamani
+                                                   where Id = @Id";
+
+
 
             public static string SecTurUpdate => @"update `kullanicilar` set
                                          `SeciliTurnuva` = @SeciliTurnuva
@@ -32,7 +42,12 @@ namespace VeritabaniKatmani.SqlQuery
 
             public static string Delete => "delete from kullanicilar where Id = @Id";
             public static string GetAll => @"select * from kullanicilar";
-            public static string GetbyId => "select * from kullanicilar where Id = @Id";
+            public static string GetbyId => @"select
+                                                k.*,
+                                                r.RolAciklama
+                                                from kullanicilar k
+                                                inner join Rol r on r.RolAdi = k.Rol
+                                                where k.Id = @Id";
 
             public static string GetbyMaxId => "select Max(Id) as MaxId from kullanicilar";
             public static string GetbyName => @"select

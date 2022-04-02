@@ -29,8 +29,12 @@ namespace TurnuvaWebUygulama.Controllers
                
                 FormsAuthentication.SetAuthCookie(m.KullaniciAdi, false);
                 Session["KullaniciId"] = m.Id;
+
+                Kullanicilar.Id = m.Id;
+                Kullanicilar.SonGirisZamani = DateTime.Now;
+                MvcDbHelper.Repository.Update(Queries.Kullanicilar.SonGirisUpdate, Kullanicilar);
                 return RedirectToAction("Index", "Home");
-            }
+             }
             else
             {
                 ViewBag.LoginError = "Hatalı Kullanıcı Adı veya Şifre";
