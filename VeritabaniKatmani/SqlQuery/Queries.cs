@@ -617,7 +617,21 @@ where m.Id = @Id";
         }
 
 
+        public static class Kurallar
+        {
+            public static string Insert => @"INSERT INTO `kurallar`(`KuralNo`, `Kural`) 
+                                                                 VALUES(@KuralNo,@Kural)";
+            public static string Update => @"update `kurallar` set
+                                          `KuralNo` = @KuralNo,
+                                          `Kural` = @Kural
+                                          where Id = @Id";
 
+            public static string Delete => "delete from kurallar where Id = @Id";
+            public static string GetAll => "select * from Kurallar";
+            public static string GetbyId => "select * from kurallar where Id = @Id";
+
+
+        }
 
 
 

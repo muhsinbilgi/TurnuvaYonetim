@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<VeritabaniKatmani.Kurallar>
+
+
+
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        var printekrani = window.open('', 'Print', 'height=650,width=600');
+        printekrani.document.write('<html><head><title>my div</title>');
+        /*optional stylesheet*/ //printekrani.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        printekrani.document.write('</head><body >');
+        printekrani.document.write(data);
+        printekrani.document.write('</body></html>');
+
+        printekrani.document.close(); // necessary for IE >= 10
+        printekrani.focus(); // necessary for IE >= 10
+
+        printekrani.print();
+        printekrani.close();
+
+        return true;
+    }
+
+</script>
+
+
+
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Kurallar</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    @if (User.IsInRole("A") || User.IsInRole("Y"))
+                    {
+                        <li class="active">@Html.ActionLink("Kural Ekle", "Ekle", "Kurallar", new { @class = "btn btn-success btn-lg" })</li>
+                    }
+                    <li>@Html.ActionLink("Yazdır", "", "", new { onclick = "PrintElem('#Kurallar')" }, new { @class = "btn btn-success btn-lg" })</li>
+                    <li>@Html.ActionLink("Paylaş", "", "", new { @class = "btn btn-success btn-lg" })</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="card">
+
+        <div id="Kurallar" class="card-body">
+            <table class="table table-striped" width="100%">
+                <thead>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.KuralNo)</th>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Kural)</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+
+                            <td>@Html.DisplayFor(modelItem => item.KuralNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Kural)</td>
+                            <td align="right">
+                                @if (User.IsInRole("A") || User.IsInRole("Y"))
+                                {
+                                    @Html.ActionLink("Düzenle", "Duzenle", "Kurallar", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                }
+                            </td>
+                            <td align="left">
+                                @using (Html.BeginForm("Sil", "Kurallar", new { Id = item.Id }, FormMethod.Post))
+                                {
+                                    if (User.IsInRole("A") || User.IsInRole("Y"))
+                                    {
+                                        <button class="btn btn-danger btn-sm">Sil</button>
+                                    }
+                                }
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                }
+
+            </table>
+           
+
+        </div>
+    </div>
+</div>
+

@@ -146,6 +146,7 @@
     <Compile Include="Controllers\GruplarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
+    <Compile Include="Controllers\KurallarController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MaclarController.cs" />
     <Compile Include="Controllers\SporcularController.cs" />
@@ -2901,6 +2902,9 @@
     <Content Include="Views\FiksturMotoru\Eslesmeler.cshtml" />
     <Content Include="Views\FiksturMotoru\Fikstur.cshtml" />
     <Content Include="Views\Home\Profilim.cshtml" />
+    <Content Include="Views\Kurallar\Index.cshtml" />
+    <Content Include="Views\Kurallar\Ekle.cshtml" />
+    <Content Include="Views\Kurallar\Duzenle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
