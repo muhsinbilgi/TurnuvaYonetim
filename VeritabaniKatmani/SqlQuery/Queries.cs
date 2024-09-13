@@ -634,6 +634,16 @@ where m.Id = @Id";
         }
 
 
+        public static class SiteKayit
+        {
+            public static string Insert => @"INSERT INTO `sitekayit`(`email`, `adsoyad`, `mesaj`,`kayitzamani`) 
+                                                                 VALUES(@email,@adsoyad,@mesaj,@kayitzamani)";
+
+            public static string GetAll => "select * from sitekayit";
+            public static string GetbyId => "select * from sitekayit where Id = @Id";
+
+
+        }
 
 
 

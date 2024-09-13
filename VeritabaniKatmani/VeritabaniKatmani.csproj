@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IDbModel.cs" />
+    <Compile Include="Model\SiteKayit.cs" />
     <Compile Include="Model\Detay.cs" />
     <Compile Include="Model\Evrak.cs" />
     <Compile Include="Model\EvrakTuru.cs" />
